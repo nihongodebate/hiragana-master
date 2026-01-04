@@ -69,14 +69,14 @@ const ROMAJI_MAP = {
   'や': 'ya', 'ゆ': 'yu', 'よ': 'yo',
   'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro',
   'わ': 'wa', 'を': 'wo', 'ん': 'n',
-  // Katakana (Resolved all duplicate keys including 'ヨ', 'ヘ', 'ホ')
+  // Katakana (Resolved duplicate keys like 'よ' -> 'ヨ')
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
   'タ': 'ta', 'チ': 'chi', 'ツ': 'tsu', 'テ': 'te', 'ト': 'to',
   'ナ': 'na', 'ニ': 'ni', 'ヌ': 'nu', 'ネ': 'ne', 'ノ': 'no',
   'ハ': 'ha', 'ヒ': 'hi', 'フ': 'fu', 'ヘ': 'he', 'ホ': 'ho',
-  'マ': 'ma', 'ミ': 'mi', 'ム': 'mu', '메': 'me', 'モ': 'mo',
+  'マ': 'ma', 'ミ': 'mi', 'ム': 'mu', 'メ': 'me', 'モ': 'mo',
   'ヤ': 'ya', 'ユ': 'yu', 'ヨ': 'yo',
   'ラ': 'ra', 'リ': 'ri', 'ル': 'ru', 'レ': 're', 'ロ': 'ro',
   'ワ': 'wa', 'ヲ': 'wo', 'ン': 'n'
@@ -88,7 +88,7 @@ const ALL_ROMAJI = Array.from(new Set(Object.values(ROMAJI_MAP)));
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [gameState, setGameState] = useState('HOME'); 
+  const [gameState, setGameState] = useState('HOME'); // 'HOME', 'PLAYING', 'GAMEOVER', 'CLEAR', 'RECORDS'
   const [charType, setCharType] = useState('HIRAGANA');
   const [mode, setMode] = useState('GAME_HINT'); 
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
@@ -107,6 +107,7 @@ const App = () => {
   const [firebaseError, setFirebaseError] = useState(!isConfigValid);
   
   const timerRef = useRef(null);
+  const scoreRef = useRef(0);
 
   useEffect(() => {
     if (!isConfigValid || !auth) {
@@ -175,6 +176,21 @@ const App = () => {
     }
   }, [charType]);
 
+  const saveScore = async (val, type, currentMode) => {
+    if (!user || !db) return;
+    try {
+      await addDoc(collection(db, 'artifacts', currentAppId, 'public', 'data', 'leaderboard'), {
+        userId: user.uid,
+        userName: userName || 'Anonymous Learner',
+        score: val,
+        scoreType: type, 
+        mode: currentMode,
+        charType: charType,
+        date: new Date().toISOString()
+      });
+    } catch (e) { console.error("Score save failed:", e); }
+  };
+
   const startSession = (selectedMode) => {
     setMode(selectedMode);
     setCurrentRowIndex(0);
@@ -182,6 +198,7 @@ const App = () => {
     setMissCount(0);
     setElapsedTime(0);
     setScoreCount(0);
+    scoreRef.current = 0;
     setTimeLeft(60);
     setIsError(false);
     setHintCardId(null);
@@ -199,29 +216,30 @@ const App = () => {
     setIsError(false);
   };
 
+  // 精度を重視したタイマーロジック (Date.now() の差分で計算)
   useEffect(() => {
-    if (gameState === 'PLAYING') {
-      if (mode.includes('RANDOM')) {
-        timerRef.current = setInterval(() => {
-          setTimeLeft(prev => {
-            if (prev <= 0.01) {
-              setGameState('CLEAR');
-              saveScore(scoreCount, 'COUNT');
-              return 0;
-            }
-            return prev - 0.01;
-          });
-        }, 10);
-      } else if (!mode.includes('PRACTICE')) {
-        timerRef.current = setInterval(() => {
-          setElapsedTime(Date.now() - (startTime || Date.now()));
-        }, 10);
-      }
+    if (gameState === 'PLAYING' && startTime) {
+      timerRef.current = setInterval(() => {
+        const now = Date.now();
+        const diff = now - startTime;
+
+        if (mode.includes('RANDOM')) {
+          const remaining = Math.max(0, (60000 - diff) / 1000);
+          setTimeLeft(remaining);
+          if (remaining <= 0) {
+            clearInterval(timerRef.current);
+            setGameState('CLEAR');
+            saveScore(scoreRef.current, 'COUNT', mode);
+          }
+        } else if (!mode.includes('PRACTICE')) {
+          setElapsedTime(diff);
+        }
+      }, 50); 
     } else {
       if (timerRef.current) clearInterval(timerRef.current);
     }
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [gameState, mode, startTime, scoreCount]);
+  }, [gameState, mode, startTime]);
 
   useEffect(() => {
     if (mode.includes('PRACTICE') && gameState === 'PLAYING') {
@@ -253,7 +271,9 @@ const App = () => {
     if (card.val === correctVal) {
       setIsError(false);
       if (mode.includes('RANDOM')) {
-        setScoreCount(prev => prev + 1);
+        const newScore = scoreCount + 1;
+        setScoreCount(newScore);
+        scoreRef.current = newScore;
         const next = generateCards(0, mode);
         setCards(next.cards);
         setRandomTarget(next.target);
@@ -270,7 +290,7 @@ const App = () => {
             setCards(next.cards);
           } else {
             setGameState('CLEAR');
-            if (!mode.includes('PRACTICE')) saveScore(elapsedTime, 'TIME');
+            if (!mode.includes('PRACTICE')) saveScore(elapsedTime, 'TIME', mode);
           }
         }
       }
@@ -281,25 +301,10 @@ const App = () => {
         setMissCount(nextMissCount);
         if (nextMissCount >= 5) {
           setGameState('GAMEOVER');
-          if (mode.includes('RANDOM')) saveScore(scoreCount, 'COUNT');
+          if (mode.includes('RANDOM')) saveScore(scoreCount, 'COUNT', mode);
         }
       }
     }
-  };
-
-  const saveScore = async (val, type) => {
-    if (!user || !db) return;
-    try {
-      await addDoc(collection(db, 'artifacts', currentAppId, 'public', 'data', 'leaderboard'), {
-        userId: user.uid,
-        userName: userName || 'Anonymous Learner',
-        score: val,
-        scoreType: type, 
-        mode: mode,
-        charType: charType,
-        date: new Date().toISOString()
-      });
-    } catch (e) { console.error("Score save failed:", e); }
   };
 
   const formatTime = (ms) => {
@@ -310,7 +315,7 @@ const App = () => {
 
   const renderRankingBox = (title, records, sType) => (
     <div className="bg-white rounded-xl p-3 border border-slate-100 shadow-sm flex flex-col h-full">
-      <h4 className="text-[10px] font-black text-slate-800 mb-2 uppercase border-b border-slate-50 pb-1">{title}</h4>
+      <h4 className="text-[10px] font-black text-slate-800 mb-2 uppercase border-b border-slate-50 pb-1 leading-tight">{title}</h4>
       <div className="space-y-1.5">
         {records.length === 0 ? <p className="text-[9px] text-slate-300 italic text-center py-2">No records</p> : 
           records.map((entry, i) => (
@@ -359,7 +364,7 @@ const App = () => {
         {gameState === 'PLAYING' && (
           <div className="bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">
             <span className="font-mono text-indigo-700 text-xs font-bold tabular-nums">
-              {mode.includes('RANDOM') ? `${timeLeft.toFixed(2)}s` : formatTime(elapsedTime)}
+              {mode.includes('RANDOM') ? `${timeLeft.toFixed(1)}s` : formatTime(elapsedTime)}
             </span>
           </div>
         )}
@@ -482,7 +487,6 @@ const App = () => {
         {gameState === 'RECORDS' && (
           <div className="flex-1 flex flex-col space-y-6 py-2 animate-in slide-in-from-right duration-500">
             <button onClick={() => setGameState('HOME')} className="flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-widest mb-2"><ChevronLeft className="w-4 h-4" /> Back to Home</button>
-            
             <div className="space-y-8 pb-10">
               <section>
                 <h3 className="text-sm font-black text-slate-900 border-b-2 border-indigo-500 pb-2 mb-4 uppercase flex items-center gap-2">
@@ -521,7 +525,7 @@ const App = () => {
             <div className="flex justify-between items-end px-2 flex-none">
               <div className="leading-none">
                 <p className="text-[8px] text-slate-400 uppercase font-black">{mode.includes('RANDOM') ? 'Score' : 'Progress'}</p>
-                <h3 className="text-sm font-bold text-indigo-600">{mode.includes('RANDOM') ? `${scoreCount} chars` : rows[currentRowIndex].name}</h3>
+                <h3 className="text-sm font-bold text-indigo-600">{mode.includes('RANDOM') ? `${scoreCount} pt` : rows[currentRowIndex].name}</h3>
               </div>
               {!mode.includes('PRACTICE') && !mode.includes('RANDOM') && (
                 <div className="text-right leading-none">
@@ -564,7 +568,7 @@ const App = () => {
         {gameState === 'CLEAR' && (
           <div className="flex-1 flex flex-col items-center justify-center space-y-4 animate-in slide-in-from-bottom duration-500">
             <Trophy className="w-16 h-16 text-amber-500" />
-            <div className="text-center space-y-1"><h2 className="text-xl font-black text-slate-900 uppercase">MISSION CLEAR</h2><p className="text-slate-400 font-black text-[9px] tracking-widest uppercase">{charType} 마스터 완료!</p></div>
+            <div className="text-center space-y-1"><h2 className="text-xl font-black text-slate-900 uppercase">MISSION CLEAR</h2><p className="text-slate-400 font-black text-[9px] tracking-widest uppercase">{charType} 마スター完了!</p></div>
             <div className="py-4 px-10 bg-white rounded-2xl border border-slate-100 shadow-lg text-center">
               <p className="text-[9px] text-slate-400 uppercase font-black mb-0.5">{mode.includes('RANDOM') ? 'Final Score' : 'Total Time'}</p>
               <p className="text-4xl font-mono font-black text-indigo-600 tabular-nums">
