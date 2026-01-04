@@ -58,7 +58,7 @@ const KATAKANA_ROWS = [
 ];
 
 const ROMAJI_MAP = {
-  // Hiragana
+  // Hiragana block
   'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
   'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
   'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so',
@@ -69,7 +69,7 @@ const ROMAJI_MAP = {
   'や': 'ya', 'ゆ': 'yu', 'よ': 'yo',
   'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro',
   'わ': 'wa', 'を': 'wo', 'ん': 'n',
-  // Katakana (Resolved duplicate keys like 'よ' -> 'ヨ')
+  // Katakana block (All duplicates resolved: ヨ, ヘ, ホ, etc.)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -88,7 +88,7 @@ const ALL_ROMAJI = Array.from(new Set(Object.values(ROMAJI_MAP)));
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [gameState, setGameState] = useState('HOME'); // 'HOME', 'PLAYING', 'GAMEOVER', 'CLEAR', 'RECORDS'
+  const [gameState, setGameState] = useState('HOME'); 
   const [charType, setCharType] = useState('HIRAGANA');
   const [mode, setMode] = useState('GAME_HINT'); 
   const [currentRowIndex, setCurrentRowIndex] = useState(0);
@@ -108,6 +108,19 @@ const App = () => {
   
   const timerRef = useRef(null);
   const scoreRef = useRef(0);
+
+  // --- PWA Service Worker Registration ---
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').then(reg => {
+          console.log('SW registered:', reg);
+        }).catch(err => {
+          console.log('SW failed:', err);
+        });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (!isConfigValid || !auth) {
@@ -216,7 +229,7 @@ const App = () => {
     setIsError(false);
   };
 
-  // 精度を重視したタイマーロジック (Date.now() の差分で計算)
+  // --- Accurate Timer Logic (Date-diff based) ---
   useEffect(() => {
     if (gameState === 'PLAYING' && startTime) {
       timerRef.current = setInterval(() => {
@@ -493,9 +506,9 @@ const App = () => {
                   <span className="p-1 bg-indigo-500 text-white rounded text-[10px]">あ</span> HIRAGANA GAMES
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-                  {renderRankingBox("50음도순(힌트) 로마자→히라가나", getFilteredRecords('HIRAGANA', 'GAME_HINT', 'TIME'), 'TIME')}
-                  {renderRankingBox("50음도순(노힌트) 로마자→히라가나", getFilteredRecords('HIRAGANA', 'GAME_NO_HINT', 'TIME'), 'TIME')}
-                  {renderRankingBox("랜덤모드 로마자→히라가나", getFilteredRecords('HIRAGANA', 'GAME_RANDOM', 'COUNT'), 'COUNT')}
+                  {renderRankingBox("50음도순(힌트) 로마자→히라가な", getFilteredRecords('HIRAGANA', 'GAME_HINT', 'TIME'), 'TIME')}
+                  {renderRankingBox("50음도순(노힌트) 로마자→히라가な", getFilteredRecords('HIRAGANA', 'GAME_NO_HINT', 'TIME'), 'TIME')}
+                  {renderRankingBox("랜덤모드 로마자→히라가な", getFilteredRecords('HIRAGANA', 'GAME_RANDOM', 'COUNT'), 'COUNT')}
                   {renderRankingBox("50음도 히라가나→로마자", getFilteredRecords('HIRAGANA', 'GAME_ROMAJI', 'TIME'), 'TIME')}
                   {renderRankingBox("랜덤 히라가나→로마자", getFilteredRecords('HIRAGANA', 'GAME_ROMAJI_RANDOM', 'COUNT'), 'COUNT')}
                 </div>
@@ -568,7 +581,7 @@ const App = () => {
         {gameState === 'CLEAR' && (
           <div className="flex-1 flex flex-col items-center justify-center space-y-4 animate-in slide-in-from-bottom duration-500">
             <Trophy className="w-16 h-16 text-amber-500" />
-            <div className="text-center space-y-1"><h2 className="text-xl font-black text-slate-900 uppercase">MISSION CLEAR</h2><p className="text-slate-400 font-black text-[9px] tracking-widest uppercase">{charType} 마スター完了!</p></div>
+            <div className="text-center space-y-1"><h2 className="text-xl font-black text-slate-900 uppercase">MISSION CLEAR</h2><p className="text-slate-400 font-black text-[9px] tracking-widest uppercase">{charType} 마스터 완료!</p></div>
             <div className="py-4 px-10 bg-white rounded-2xl border border-slate-100 shadow-lg text-center">
               <p className="text-[9px] text-slate-400 uppercase font-black mb-0.5">{mode.includes('RANDOM') ? 'Final Score' : 'Total Time'}</p>
               <p className="text-4xl font-mono font-black text-indigo-600 tabular-nums">
@@ -577,7 +590,7 @@ const App = () => {
             </div>
             <div className="w-full max-w-xs space-y-2">
               <button onClick={() => startSession(mode)} className="w-full bg-indigo-600 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 active:scale-95 shadow-md shadow-indigo-100"><RefreshCw className="w-4 h-4" />다시 플레이</button>
-              <button onClick={handleReturnHome} className="text-slate-400 hover:text-indigo-600 text-[10px] font-black uppercase tracking-widest active:scale-95 shadow-sm text-xs">홈으로 돌아가기</button>
+              <button onClick={handleReturnHome} className="text-slate-400 hover:text-indigo-600 text-[10px] font-black uppercase tracking-widest active:scale-95 shadow-sm text-xs">トップに戻る</button>
             </div>
           </div>
         )}
