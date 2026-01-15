@@ -147,8 +147,8 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'かわ', meaning: '강', variants: ['かわ', '川'] },
   { word: 'つき', meaning: '달', variants: ['つき', '月', '付'] },
   { word: 'ほし', meaning: '별', variants: ['ほし', '星'] },
-  { word: 'でんわ', meaning: '전話', variants: ['でんわ', '電話'] },
-  { word: 'しんぶん', meaning: '新聞', variants: ['しんぶん', '新聞'] },
+  { word: 'でんわ', meaning: '전화', variants: ['でんわ', '電話'] },
+  { word: 'しんぶん', meaning: '신문', variants: ['しんぶん', '新聞'] },
   { word: 'おちゃ', meaning: '차', variants: ['おちゃ', 'お茶'] },
   { word: 'じしょ', meaning: '사전', variants: ['じしょ', '辞書'] },
   { word: 'かばん', meaning: '가방', variants: ['かばん', '鞄'] },
@@ -167,11 +167,11 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'ともだち', meaning: '친구', variants: ['ともだち', '友達'] },
   { word: 'せんせい', meaning: '선생님', variants: ['せんせい', '先生'] },
   { word: 'なまえ', meaning: '이름', variants: ['なまえ', '名前'] },
-  { word: 'ごはん', meaning: '밥', variants: ['ごはん', '御飯'] },
+  { word: 'ごはん', meaning: '밥', variants: ['ごはん', '御飯', 'ご飯'] },
   { word: 'みず', meaning: '물', variants: ['みず', '水', '見ず'] },
   { word: 'えき', meaning: '역', variants: ['えき', '駅'] },
   { word: 'でんしゃ', meaning: '전철', variants: ['でんしゃ', '電車'] },
-  { word: '나つ', meaning: '여름', variants: ['なつ', '夏'] },
+  { word: 'なつ', meaning: '여름', variants: ['なつ', '夏'] },
   { word: 'ふゆ', meaning: '겨울', variants: ['ふゆ', '冬'] },
   { word: 'はる', meaning: '봄', variants: ['はる', '春', '貼る', '張る'] },
   { word: 'あき', meaning: '가을', variants: ['あき', '秋', '空き'] },
@@ -198,39 +198,39 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'サラダ', meaning: '샐러드', variants: ['サラダ'] },
   { word: 'シャツ', meaning: '셔츠', variants: ['シャツ'] },
   { word: 'スマホ', meaning: '스마트폰', variants: ['スマホ'] },
-  { word: '게임', meaning: '게임', variants: ['게임', 'ゲーム'] },
-  { word: '화장실', meaning: '화장실', variants: ['화장실', 'トイレ'] },
-  { word: '카메라', meaning: '카메라', variants: ['카메라', 'カメラ'] },
-  { word: '라디오', meaning: '라디오', variants: ['라디오', 'ラジオ'] },
-  { word: '토마토', meaning: '토마토', variants: ['토마토', 'トマト'] },
-  { word: '바나나', meaning: '바나나', variants: ['바나나', 'バナナ'] },
-  { word: '멜론', meaning: '멜론', variants: ['멜론', 'メロン'] },
-  { word: '아이스', meaning: '아이스크림', variants: ['아이스'] },
-  { word: '주스', meaning: '주스', variants: ['주스', 'ジュース'] },
-  { word: '콜라', meaning: '콜라', variants: ['콜라', 'コーラ'] },
-  { word: '카레', meaning: '카레', variants: ['카레', 'カレー'] },
-  { word: '라면', meaning: '라면', variants: ['라면', 'ラーメン'] },
-  { word: '스푼', meaning: '스푼', variants: ['스푼', 'スプーン'] },
-  { word: '포크', meaning: '포크', variants: ['포크', 'フォーク'] },
-  { word: '나이프', meaning: '나이프', variants: ['나이프', 'ナイフ'] },
-  { word: '넥타이', meaning: '넥타이', variants: ['넥타이', 'ネクタイ'] },
-  { word: '치마', meaning: '치마', variants: ['치마', 'スカート'] },
-  { word: '기타', meaning: '기타', variants: ['기타', 'ギター'] },
-  { word: '마이크', meaning: '마이크', variants: ['마이크', 'マイク'] },
-  { word: '컴퓨터', meaning: '컴퓨터', variants: ['컴퓨터', 'パソコン'] },
-  { word: '테니스', meaning: '테니스', variants: ['테니스', 'テニス'] },
-  { word: '골프', meaning: '골프', variants: ['골프', 'ゴルフ'] },
-  { word: '축구', meaning: '축구', variants: ['축구', 'サッカー'] },
-  { word: '스키', meaning: '스키', variants: ['스키', 'スキー'] },
-  { word: '뉴스', meaning: '뉴스', variants: ['뉴스', 'ニュース'] },
-  { word: '클래스', meaning: '클래스', variants: ['클래스', 'クラス'] },
-  { word: '페이지', meaning: '페이지', variants: ['페이지', 'ページ'] },
-  { word: '백화점', meaning: '백화점', variants: ['백화점', 'デパート'] },
-  { word: '호텔', meaning: '호텔', variants: ['호텔', 'ホテル'] },
-  { word: '레스토랑', meaning: '레스토랑', variants: ['레스토랑', 'レストラン'] },
-  { word: '편의점', meaning: '편의점', variants: ['편의점', 'コンビニ'] },
-  { word: '농구', meaning: '농구', variants: ['농구', 'バスケット'] },
-  { word: '스포츠', meaning: '스포츠', variants: ['스포츠', 'スポーツ'] }
+  { word: 'ゲーム', meaning: '게임', variants: ['ゲーム'] },
+  { word: 'トイレ', meaning: '화장실', variants: ['トイレ'] },
+  { word: 'カメラ', meaning: '카메라', variants: ['カメラ'] },
+  { word: 'ラジオ', meaning: '라디오', variants: ['ラジオ'] },
+  { word: 'トマト', meaning: '토마토', variants: ['トマト'] },
+  { word: 'バナナ', meaning: '바나나', variants: ['バナナ'] },
+  { word: 'メロン', meaning: '멜론', variants: ['メロン'] },
+  { word: 'アイス', meaning: '아이스크림', variants: ['アイス'] },
+  { word: 'ジュース', meaning: '주스', variants: ['ジュース'] },
+  { word: 'コーラ', meaning: '콜라', variants: ['コーラ'] },
+  { word: 'カレー', meaning: '카레', variants: ['カレー'] },
+  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
+  { word: 'スプーン', meaning: '스푼', variants: ['スプーン'] },
+  { word: 'フォーク', meaning: '포크', variants: ['フォーク'] },
+  { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ'] },
+  { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
+  { word: 'スカート', meaning: '치마', variants: ['スカート'] },
+  { word: 'ギター', meaning: '기타', variants: ['ギター'] },
+  { word: 'マイク', meaning: '마이크', variants: ['マイク'] },
+  { word: 'パソコン', meaning: '컴퓨터', variants: ['パソコン'] },
+  { word: 'テニス', meaning: '테니스', variants: ['テニス'] },
+  { word: 'ゴルフ', meaning: '골프', variants: ['ゴルフ'] },
+  { word: 'サッカー', meaning: '축구', variants: ['サッカー'] },
+  { word: 'スキー', meaning: '스키', variants: ['スキー'] },
+  { word: 'ニュース', meaning: '뉴스', variants: ['ニュース'] },
+  { word: 'クラス', meaning: '클래스', variants: ['クラス'] },
+  { word: 'ページ', meaning: '페이지', variants: ['ページ'] },
+  { word: 'デパート', meaning: '백화점', variants: ['デパート'] },
+  { word: 'ホテル', meaning: '호텔', variants: ['ホテル'] },
+  { word: 'レストラン', meaning: '레스토랑', variants: ['レストラン'] },
+  { word: 'コンビニ', meaning: '편의점', variants: ['コンビニ'] },
+  { word: 'バスケット', meaning: '농구', variants: ['バスケット'] },
+  { word: 'スポーツ', meaning: '스포츠', variants: ['スポーツ'] }
 ];
 
 const ALL_HIRAGANA_POOL = [...HIRAGANA_BASIC, ...HIRAGANA_DAKUON].flatMap(r => r.chars);
@@ -732,7 +732,7 @@ const App = () => {
                        </div>
                     </div>
                     <div className="space-y-1.5">
-                       <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '탁음·반탁음 (가〜파)' : '탁음·반탁음 (ガ〜パ)'}</p>
+                       <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '탁음·반탁음 (が〜ぱ)' : '탁음·반탁음 (ガ〜パ)'}</p>
                        <div className="grid grid-cols-5 gap-2">
                          {(charType === 'HIRAGANA' ? HIRAGANA_DAKUON : KATAKANA_DAKUON).map((row, idx) => (
                            <button key={idx} onClick={() => startSession('GAME_DAKUON', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-2 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
@@ -762,7 +762,7 @@ const App = () => {
                          ))}
                        </div>
                     </div>
-                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-purple-400" /> 랜덤 챌린ジ (60s)</button>
+                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-purple-400" /> 랜덤 챌린지 (60s)</button>
                   </div>
                 </div>
 
@@ -772,7 +772,7 @@ const App = () => {
                     <button onClick={() => startSession('GAME_VOICE')} className="bg-white border border-slate-100 p-5 rounded-3xl flex items-center justify-between active:scale-[0.98] shadow-sm hover:border-slate-900 hover:bg-slate-50 transition-all group">
                       <div className="flex items-center gap-4">
                         <div className="p-3 bg-slate-100 rounded-2xl text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors shadow-sm"><Mic className="w-5 h-5" /></div>
-                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (時間無制限)</span>
+                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (시간 무제한)</span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-300" />
                     </button>
