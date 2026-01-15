@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana
+  // Katakana (Fixed duplicate keys)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -132,13 +132,13 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'ねこ', meaning: '고양이', variants: ['ねこ', '猫', 'ネコ'] },
   { word: 'さかな', meaning: '생선', variants: ['さかな', '魚', 'サカナ'] },
   { word: 'あめ', meaning: '비/사탕', variants: ['あめ', '雨', '飴'] },
-  { word: 'うみ', meaning: '바다', variants: ['うみ', '海'] },
+  { word: 'うみ', meaning: '바다', variants: ['うみ', '海', '膿', '生み'] },
   { word: 'とり', meaning: '새', variants: ['とり', '鳥', '取り', '撮り'] },
   { word: 'はな', meaning: '꽃/코', variants: ['はな', '花', '鼻'] },
   { word: 'ゆき', meaning: '눈', variants: ['ゆき', '雪', '行き'] },
   { word: 'すし', meaning: '초밥', variants: ['すし', '寿司'] },
-  { word: 'くるま', meaning: '자동차', variants: ['くるま', '車'] },
-  { word: 'りんご', meaning: '사과', variants: ['りんご', '林檎', 'リンゴ'] },
+  { word: 'くるま', meaning: '자동차', variants: ['くるま', '車', 'クルマ'] },
+  { word: 'りんご', meaning: '사과', variants: ['りんご', '林檎'] },
   { word: 'がっこう', meaning: '학교', variants: ['がっこう', '学校'] },
   { word: 'きって', meaning: '우표', variants: ['きって', '切手', '切って'] },
   { word: 'じかん', meaning: '시간', variants: ['じかん', '時間'] },
@@ -151,15 +151,15 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'しんぶん', meaning: '신문', variants: ['しんぶん', '新聞'] },
   { word: 'おちゃ', meaning: '차', variants: ['おちゃ', 'お茶'] },
   { word: 'じしょ', meaning: '사전', variants: ['じしょ', '辞書'] },
-  { word: 'かばん', meaning: '가방', variants: ['かばん', '鞄', 'カバン'] },
+  { word: 'かばん', meaning: '가방', variants: ['かばん', '鞄'] },
   { word: 'ぼうし', meaning: '모자', variants: ['ぼうし', '帽子'] },
   { word: 'まど', meaning: '창문', variants: ['まど', '窓'] },
   { word: 'えんぴつ', meaning: '연필', variants: ['えんぴつ', '鉛筆'] },
   { word: 'つくえ', meaning: '책상', variants: ['つくえ', '机'] },
-  { word: 'いす', meaning: '의자', variants: ['いす', '椅子', 'イス'] },
+  { word: 'いす', meaning: '의자', variants: ['いす', '椅子'] },
   { word: 'ほん', meaning: '책', variants: ['ほん', '本'] },
-  { word: 'はさみ', meaning: '가위', variants: ['はさみ', '鋏', 'ハサミ'] },
-  { word: 'くつ', meaning: '신발', variants: ['くつ', '靴', 'クツ'] },
+  { word: 'はさみ', meaning: '가위', variants: ['はさみ', '鋏'] },
+  { word: 'くつ', meaning: '신발', variants: ['くつ', '靴'] },
   { word: 'ふく', meaning: '옷', variants: ['ふく', '服', '吹く', '拭く'] },
   { word: 'かさ', meaning: '우산', variants: ['かさ', '傘'] },
   { word: 'ひと', meaning: '사람', variants: ['ひと', '人'] },
@@ -181,11 +181,11 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
 ];
 
 const VOICE_QUIZ_WORDS_KATAKANA = [
-  { word: 'パン', meaning: '빵', variants: ['パン'] },
-  { word: 'バス', meaning: '버스', variants: ['バス'] },
-  { word: 'ドア', meaning: '문', variants: ['ドア'] },
+  { word: 'パン', meaning: '빵', variants: ['パン', 'ぱん'] },
+  { word: 'バス', meaning: '버스', variants: ['バス', 'ばす'] },
+  { word: 'ドア', meaning: '문', variants: ['ドア', 'どあ'] },
   { word: 'テレビ', meaning: 'TV', variants: ['テレビ', 'てれび'] },
-  { word: 'ピアノ', meaning: '피아노', variants: ['ピアノ'] },
+  { word: 'ピアノ', meaning: '피아노', variants: ['ピアノ', 'ぴあの'] },
   { word: 'ケーキ', meaning: '케이크', variants: ['ケーキ'] },
   { word: 'ビール', meaning: '맥주', variants: ['ビール'] },
   { word: 'コップ', meaning: '컵', variants: ['コップ'] },
@@ -209,14 +209,14 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ジュース', meaning: '주스', variants: ['ジュース'] },
   { word: 'コーラ', meaning: '콜라', variants: ['コーラ'] },
   { word: 'カレー', meaning: '카레', variants: ['カレー'] },
-  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
-  { word: 'スプーン', meaning: 'スプーン', variants: ['スプーン'] },
-  { word: 'フォーク', meaning: 'フォーク', variants: ['フォーク'] },
-  { word: 'ナイフ', meaning: 'ナイフ', variants: ['ナイフ'] },
+  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン', 'らーめん'] },
+  { word: 'スプーン', meaning: '스푼', variants: ['スプーン'] },
+  { word: 'フォーク', meaning: '포크', variants: ['フォーク'] },
+  { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ'] },
   { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
   { word: 'スカート', meaning: '치마', variants: ['スカート'] },
   { word: 'ギター', meaning: '기타', variants: ['ギター'] },
-  { word: 'マイク', meaning: 'マイク', variants: ['マイク'] },
+  { word: 'マイク', meaning: '마이크', variants: ['マイク'] },
   { word: 'パソコン', meaning: '컴퓨터', variants: ['パソコン'] },
   { word: 'テニス', meaning: '테니스', variants: ['テニス'] },
   { word: 'ゴルフ', meaning: '골프', variants: ['ゴルフ'] },
@@ -230,7 +230,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'レストラン', meaning: '레스토랑', variants: ['レストラン'] },
   { word: 'コンビニ', meaning: '편의점', variants: ['コンビニ'] },
   { word: 'バスケット', meaning: '농구', variants: ['バスケット'] },
-  { word: '스포츠', meaning: '스포츠', variants: ['スポーツ'] }
+  { word: 'スポーツ', meaning: '스포츠', variants: ['スポーツ'] }
 ];
 
 const ALL_HIRAGANA_POOL = [...HIRAGANA_BASIC, ...HIRAGANA_DAKUON].flatMap(r => r.chars);
@@ -266,7 +266,8 @@ const App = () => {
   const targetValueRef = useRef(''); 
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
-  
+  const transitionRef = useRef(false); // 次の問題への移行ロックフラグ
+
   // --- Helpers ---
   const displayRows = charType === 'HIRAGANA' 
     ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
@@ -302,6 +303,9 @@ const App = () => {
       const targetObj = pool[Math.floor(Math.random() * pool.length)];
       setCurrentWord(targetObj);
       targetValueRef.current = targetObj.word;
+      
+      // 移行フェーズ終了（音声判定の無視を解除）
+      setTimeout(() => { transitionRef.current = false; }, 800); 
       return targetObj;
     } else if (currentMode.includes('RANDOM')) {
       const target = kanaPool[Math.floor(Math.random() * kanaPool.length)];
@@ -338,33 +342,47 @@ const App = () => {
   }, [charType, currentRowIndex, targetCharIndex]);
 
   const handleCorrect = useCallback(() => {
+    if (transitionRef.current) return;
+    transitionRef.current = true; // 判定ロック開始
+
     setRecognizedText('');
     const nextScore = scoreRef.current + 1;
     setScoreCount(nextScore);
     scoreRef.current = nextScore;
-
-    if (mode === 'GAME_VOICE' || mode.includes('RANDOM')) {
-      generateNewTarget(mode);
-    } else {
-      const currentRows = charType === 'HIRAGANA' 
-          ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
-          : (mode.includes('DAKUON') ? KATAKANA_DAKUON : KATAKANA_BASIC);
-
-      if (targetCharIndex + 1 < (currentRows[currentRowIndex]?.chars.length || 0)) {
-        setTargetCharIndex(prev => prev + 1);
+    
+    setFeedback('correct');
+    
+    setTimeout(() => {
+      setFeedback(null);
+      if (mode === 'GAME_VOICE' || mode.includes('RANDOM')) {
+        generateNewTarget(mode);
       } else {
-        if (isRowLimited) {
-          setTargetCharIndex(0); 
-          generateNewTarget(mode, currentRowIndex, 0);
+        const currentRows = charType === 'HIRAGANA' 
+            ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
+            : (mode.includes('DAKUON') ? KATAKANA_DAKUON : KATAKANA_BASIC);
+
+        if (targetCharIndex + 1 < (currentRows[currentRowIndex]?.chars.length || 0)) {
+          setTargetCharIndex(prev => prev + 1);
+          setTimeout(() => { transitionRef.current = false; }, 200); 
         } else {
-          setGameState('CLEAR');
+          if (isRowLimited) {
+            setTargetCharIndex(0); 
+            generateNewTarget(mode, currentRowIndex, 0);
+            setTimeout(() => { transitionRef.current = false; }, 200);
+          } else {
+            setGameState('CLEAR');
+          }
         }
       }
-    }
+    }, 400);
   }, [mode, charType, targetCharIndex, currentRowIndex, generateNewTarget, isRowLimited]);
 
   const handleSkip = () => {
+    if (transitionRef.current) return;
+    transitionRef.current = true;
     setRecognizedText('');
+    setFeedback(null);
+    setIsError(false);
     generateNewTarget(mode);
   };
 
@@ -383,12 +401,15 @@ const App = () => {
   }, [mode]);
 
   const handleWrong = useCallback((userVal) => {
-    if (feedback !== null || mode === 'GAME_VOICE') return; 
+    if (feedback !== null || mode === 'GAME_VOICE' || transitionRef.current) return; 
     setIsError(true);
     setFeedback('wrong');
     const currentT = mode === 'GAME_VOICE' ? currentWord : targetValueRef.current;
     recordMistake(currentT, userVal);
-    setTimeout(() => setFeedback(null), 400);
+    setTimeout(() => {
+        setFeedback(null);
+        setIsError(false);
+    }, 400);
     
     if (isScoredMode(mode)) {
       const nextMissCount = missCount + 1;
@@ -397,7 +418,7 @@ const App = () => {
   }, [feedback, mode, recordMistake, currentWord, missCount]);
 
   const handleCardClickWrap = useCallback((card) => {
-    if (gameState !== 'PLAYING' || mode === 'GAME_VOICE' || feedback !== null) return;
+    if (gameState !== 'PLAYING' || mode === 'GAME_VOICE' || feedback !== null || transitionRef.current) return;
     const targetChar = mode.includes('RANDOM') ? randomTarget : targetValueRef.current;
     const correctVal = mode.includes('ROMAJI') ? ROMAJI_MAP[targetChar] : targetChar;
     if (card.val === correctVal) {
@@ -408,10 +429,12 @@ const App = () => {
   }, [gameState, mode, feedback, randomTarget, handleCorrect, handleWrong]);
 
   const checkVoiceAnswer = useCallback((transcript) => {
-    if (gameState !== 'PLAYING' || mode !== 'GAME_VOICE' || feedback === 'correct') return;
+    // 移行中(transitionRef)は古い音声を一切無視
+    if (gameState !== 'PLAYING' || mode !== 'GAME_VOICE' || feedback === 'correct' || transitionRef.current) return;
+    
     const cleanT = transcript.replace(/[。、.?! \s]/g, '').toLowerCase();
     const target = targetValueRef.current; 
-    if (!target) return;
+    if (!target || cleanT === '') return;
 
     const pool = charType === 'HIRAGANA' ? VOICE_QUIZ_WORDS_HIRAGANA : VOICE_QUIZ_WORDS_KATAKANA;
     const wordObj = pool.find(w => w.word === target);
@@ -421,8 +444,14 @@ const App = () => {
 
     if (isMatched) {
       handleCorrect();
+    } else {
+      // 誤答時のシェイク
+      if (!isError && !transitionRef.current) {
+        setIsError(true);
+        setTimeout(() => setIsError(false), 400);
+      }
     }
-  }, [gameState, mode, charType, handleCorrect, feedback]);
+  }, [gameState, mode, charType, handleCorrect, feedback, isError]);
 
   const checkVoiceAnswerRef = useRef();
   checkVoiceAnswerRef.current = checkVoiceAnswer;
@@ -449,10 +478,14 @@ const App = () => {
       };
 
       recognition.onresult = (event) => {
+        // 次の問題への移行中は、新しい音声入力があったとしても破棄
+        if (transitionRef.current) return;
+
         let currentText = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
             currentText += event.results[i][0].transcript;
         }
+        
         setRecognizedText(currentText);
         if (checkVoiceAnswerRef.current) checkVoiceAnswerRef.current(currentText);
       };
@@ -465,6 +498,7 @@ const App = () => {
     if (isListening) {
       recognitionRef.current.stop();
       setIsListening(false);
+      setRecognizedText('');
     } else {
       try {
         recognitionRef.current.start();
@@ -503,6 +537,7 @@ const App = () => {
     setFeedback(null);
     setRecognizedText('');
     setWrongItems([]); 
+    transitionRef.current = false;
     setGameState('PLAYING');
     setStartTime(Date.now());
     if (selectedMode === 'GAME_VOICE') {
@@ -523,6 +558,7 @@ const App = () => {
     setGameState('HOME');
     setIsError(false);
     setFeedback(null);
+    setRecognizedText('');
     setWrongItems([]);
   };
 
@@ -600,7 +636,8 @@ const App = () => {
         .mic-active { animation: mic-pulse 1.5s infinite; }
       `}} />
 
-      {feedback && feedback === 'wrong' && (
+      {/* 不正解オーバーレイ：選択モード用 */}
+      {feedback && feedback === 'wrong' && !mode.includes('VOICE') && (
         <div className="absolute inset-0 z-[200] flex items-center justify-center bg-rose-500/10">
           <div className="flex flex-col items-center">
              <div className="bg-rose-500 rounded-full p-8 shadow-2xl border-4 border-white animate-shake"><XCircle className="w-24 h-24 text-white" /></div>
@@ -628,7 +665,7 @@ const App = () => {
             <div className="text-center space-y-2 py-4">
               <div className="inline-block relative">
                 <h2 className="text-5xl font-logo font-black tracking-[-0.05em] text-logo-gradient leading-none">KANA MASTER</h2>
-                <div className="h-1 w-full bg-slate-900 rounded-full opacity-70 mt-2 shadow-sm" />
+                <div className="h-1 w-full bg-slate-900 rounded-full opacity-60 mt-2 shadow-sm" />
               </div>
             </div>
             
@@ -698,7 +735,7 @@ const App = () => {
                          ))}
                        </div>
                     </div>
-                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-purple-400" /> 랜덤 챌린지 (60s)</button>
+                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-slate-400" /> 랜덤 챌린지 (60s)</button>
                   </div>
                 </div>
 
@@ -708,7 +745,7 @@ const App = () => {
                     <button onClick={() => startSession('GAME_VOICE')} className="bg-white border border-slate-100 p-5 rounded-3xl flex items-center justify-between active:scale-[0.98] shadow-sm hover:border-slate-900 hover:bg-slate-50 transition-all group">
                       <div className="flex items-center gap-4">
                         <div className="p-3 bg-slate-100 rounded-2xl text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors shadow-sm"><Mic className="w-5 h-5" /></div>
-                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (시간 무제한)</span>
+                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (時間無制限)</span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-300" />
                     </button>
@@ -750,17 +787,19 @@ const App = () => {
                 </div>
               )}
             </div>
-            <div className={`relative flex-none ${mode === 'GAME_VOICE' ? 'h-[160px]' : 'h-[110px]'} sm:h-[150px] bg-white border border-slate-100 rounded-[2.5rem] sm:rounded-[3rem] flex flex-col items-center justify-center overflow-hidden shadow-sm transition-all duration-200 ${isError ? 'animate-shake border-rose-200 bg-rose-50' : ''}`}>
+            {/* ターゲット表示エリア：正解時は緑、エラー時は赤+揺れ */}
+            <div className={`relative flex-none ${mode === 'GAME_VOICE' ? 'h-[160px]' : 'h-[110px]'} sm:h-[150px] bg-white border rounded-[2.5rem] sm:rounded-[3rem] flex flex-col items-center justify-center overflow-hidden shadow-sm transition-all duration-300 
+                ${isError ? 'animate-shake border-rose-300 bg-rose-50 shadow-rose-100 shadow-lg' : feedback === 'correct' ? 'border-emerald-400 bg-emerald-50 shadow-emerald-100 shadow-lg' : 'border-slate-100'}`}>
                <div className="flex items-center gap-8 w-full px-6">
                   <div className="flex-1 flex flex-col items-center">
                       <p className="text-[8px] text-slate-300 uppercase tracking-[0.4em] font-black mb-2">Target</p>
                       {mode === 'GAME_VOICE' && currentWord ? (
                          <div className="flex flex-col items-center">
-                           <span className="text-4xl font-black text-slate-800">{currentWord.word}</span>
+                           <span className={`text-4xl font-black transition-colors duration-300 ${isError ? 'text-rose-600' : feedback === 'correct' ? 'text-emerald-600' : 'text-slate-800'}`}>{currentWord.word}</span>
                            <span className="text-[11px] text-slate-500 mt-2 font-black uppercase tracking-widest">{currentWord.meaning}</span>
                          </div>
                       ) : (
-                         <span className="text-5xl sm:text-7xl font-ud font-black text-slate-900 leading-none tracking-tighter">{targetCharForDisplay}</span>
+                         <span className={`text-5xl sm:text-7xl font-ud font-black leading-none tracking-tighter transition-colors duration-300 ${isError ? 'text-rose-600' : feedback === 'correct' ? 'text-emerald-600' : 'text-slate-900'}`}>{targetCharForDisplay}</span>
                       )}
                   </div>
                </div>
@@ -782,8 +821,8 @@ const App = () => {
                     </button>
                     <div className="text-center space-y-1">
                       <p className="text-[9px] font-black text-indigo-600 uppercase tracking-widest">{isListening ? 'Listening...' : 'Tap Mic to Start'}</p>
-                      <div className="min-h-[40px] px-5 py-2 bg-white rounded-2xl border border-slate-100 flex items-center justify-center shadow-sm">
-                          <span className="text-lg font-ud font-black text-slate-400">{recognizedText || '...'}</span>
+                      <div className={`min-h-[40px] px-5 py-2 bg-white rounded-2xl border flex items-center justify-center shadow-sm transition-all duration-300 ${isError ? 'border-rose-200 shadow-rose-50' : 'border-slate-100'}`}>
+                          <span className={`text-lg font-ud font-black transition-colors duration-300 ${isError ? 'text-rose-400' : 'text-slate-400'}`}>{recognizedText || '...'}</span>
                       </div>
                     </div>
                   </div>
