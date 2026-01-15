@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana
+  // Katakana (No duplicates, properly mapped to romanization)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -132,7 +132,7 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'ねこ', meaning: '고양이', variants: ['ねこ', '猫', 'ネコ'] },
   { word: 'さかな', meaning: '생선', variants: ['さかな', '魚', 'サカナ'] },
   { word: 'あめ', meaning: '비/사탕', variants: ['あめ', '雨', '飴'] },
-  { word: 'うみ', meaning: '바다', variants: ['うみ', '海'] },
+  { word: 'うみ', meaning: '바다', variants: ['うみ', '海', '生み'] },
   { word: 'とり', meaning: '새', variants: ['とり', '鳥', '取り', '撮り'] },
   { word: 'はな', meaning: '꽃/코', variants: ['はな', '花', '鼻'] },
   { word: 'ゆき', meaning: '눈', variants: ['ゆき', '雪', '行き'] },
@@ -192,13 +192,13 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ベッド', meaning: '침대', variants: ['ベッド'] },
   { word: 'バッグ', meaning: '가방', variants: ['バッグ'] },
   { word: 'ペン', meaning: '펜', variants: ['ペン'] },
-  { word: 'ノート', meaning: '노트', variants: ['ノート'] },
+  { word: 'ノート', meaning: '노ート', variants: ['ノート'] },
   { word: 'コーヒー', meaning: '커피', variants: ['コーヒー'] },
   { word: 'タクシー', meaning: '택시', variants: ['タクシー'] },
   { word: 'サラダ', meaning: '샐러드', variants: ['サラダ'] },
   { word: 'シャツ', meaning: '셔츠', variants: ['シャツ'] },
   { word: 'スマホ', meaning: '스마트폰', variants: ['スマホ'] },
-  { word: 'ゲーム', meaning: '게임', variants: ['게임', 'ゲーム'] },
+  { word: 'ゲーム', meaning: '게임', variants: ['ゲーム'] },
   { word: 'トイレ', meaning: '화장실', variants: ['トイレ'] },
   { word: 'カメラ', meaning: '카메라', variants: ['カメラ'] },
   { word: 'ラジオ', meaning: '라디오', variants: ['ラジオ'] },
@@ -266,13 +266,8 @@ const App = () => {
   const targetValueRef = useRef(''); 
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
-  const transitionRef = useRef(false); 
+  const lockRef = useRef(false); 
   const isListeningRef = useRef(false);
-
-  // --- Helpers ---
-  const displayRows = charType === 'HIRAGANA' 
-    ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
-    : (mode.includes('DAKUON') ? KATAKANA_DAKUON : KATAKANA_BASIC);
 
   // --- Functions ---
   const saveScore = useCallback(async (val, currentMode) => {
@@ -305,8 +300,7 @@ const App = () => {
       setCurrentWord(targetObj);
       targetValueRef.current = targetObj.word;
       
-      // クールタイム：0.8秒間は古い音声の残骸を無視
-      setTimeout(() => { transitionRef.current = false; }, 800); 
+      setTimeout(() => { lockRef.current = false; }, 800); 
       return targetObj;
     } else if (currentMode.includes('RANDOM')) {
       const target = kanaPool[Math.floor(Math.random() * kanaPool.length)];
@@ -323,10 +317,12 @@ const App = () => {
       }
       const combined = [correctVal, ...distractors].map(val => ({ val, id: Math.random() }));
       setCards(combined.sort(() => Math.random() - 0.5));
+      lockRef.current = false;
       return target;
     } else {
       const target = currentRows[activeRowIdx]?.chars[activeCharIdx] || '';
       targetValueRef.current = target;
+      
       const correctVal = isRomajiSelect ? ROMAJI_MAP[target] : target;
       const otherPool = isRomajiSelect ? ALL_ROMAJI_POOL.filter(v => v !== correctVal) : kanaPool.filter(v => v !== target);
       
@@ -338,17 +334,15 @@ const App = () => {
       }
       const combined = [correctVal, ...distractors].map(val => ({ val, id: Math.random() }));
       setCards(combined.sort(() => Math.random() - 0.5));
+      lockRef.current = false;
       return target;
     }
   }, [charType, currentRowIndex, targetCharIndex]);
 
   const handleCorrect = useCallback(() => {
-    if (transitionRef.current) return;
-    transitionRef.current = true; // 次の判定をロック
+    if (lockRef.current) return;
+    lockRef.current = true; 
 
-    // スマホ対応: 
-    // マイクをあえて止めない方式に挑戦（許可ダイアログ抑制）
-    // 画面表示上のテキストだけ即クリア
     setRecognizedText('');
     const nextScore = scoreRef.current + 1;
     setScoreCount(nextScore);
@@ -365,14 +359,16 @@ const App = () => {
             ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
             : (mode.includes('DAKUON') ? KATAKANA_DAKUON : KATAKANA_BASIC);
 
-        if (targetCharIndex + 1 < (currentRows[currentRowIndex]?.chars.length || 0)) {
-          setTargetCharIndex(prev => prev + 1);
-          setTimeout(() => { transitionRef.current = false; }, 200); 
+        const nextCharIdx = targetCharIndex + 1;
+        if (nextCharIdx < (currentRows[currentRowIndex]?.chars.length || 0)) {
+          setTargetCharIndex(nextCharIdx);
+          generateNewTarget(mode, currentRowIndex, nextCharIdx); 
+          setTimeout(() => { lockRef.current = false; }, 200); 
         } else {
           if (isRowLimited) {
             setTargetCharIndex(0); 
             generateNewTarget(mode, currentRowIndex, 0);
-            setTimeout(() => { transitionRef.current = false; }, 200);
+            setTimeout(() => { lockRef.current = false; }, 200);
           } else {
             setGameState('CLEAR');
           }
@@ -382,50 +378,32 @@ const App = () => {
   }, [mode, charType, targetCharIndex, currentRowIndex, generateNewTarget, isRowLimited]);
 
   const handleSkip = () => {
-    if (transitionRef.current) return;
-    transitionRef.current = true;
+    if (lockRef.current) return;
+    lockRef.current = true;
     setRecognizedText('');
     setFeedback(null);
     setIsError(false);
-    // マイクは止めずにターゲットだけ変える
     generateNewTarget(mode);
   };
 
-  const recordMistake = useCallback((target, userAns) => {
-    const targetStr = typeof target === 'object' ? (target?.word || '') : target;
-    if (!targetStr) return;
-
-    const isKanaTarget = mode.includes('ROMAJI');
-    const displayTarget = isKanaTarget ? targetStr : (ROMAJI_MAP[targetStr] || targetStr);
-    const displayCorrect = isKanaTarget ? (ROMAJI_MAP[targetStr] || targetStr) : targetStr;
-    
-    setWrongItems(prev => {
-      if (prev.find(item => item.target === displayTarget)) return prev;
-      return [...prev, { target: displayTarget, correct: displayCorrect, user: userAns }];
-    });
-  }, [mode]);
-
   const handleWrong = useCallback((userVal) => {
-    if (feedback !== null || mode === 'GAME_VOICE' || transitionRef.current) return; 
+    if (feedback !== null || mode === 'GAME_VOICE' || lockRef.current) return; 
     setIsError(true);
     setFeedback('wrong');
-    const currentT = mode === 'GAME_VOICE' ? currentWord : targetValueRef.current;
-    recordMistake(currentT, userVal);
     setTimeout(() => {
         setFeedback(null);
         setIsError(false);
     }, 400);
     
     if (isScoredMode(mode)) {
-      const nextMissCount = missCount + 1;
-      setMissCount(nextMissCount);
+      setMissCount(prev => prev + 1);
     }
-  }, [feedback, mode, recordMistake, currentWord, missCount]);
+  }, [feedback, mode]);
 
   const handleCardClickWrap = useCallback((card) => {
-    if (gameState !== 'PLAYING' || mode === 'GAME_VOICE' || feedback !== null || transitionRef.current) return;
-    const targetChar = mode.includes('RANDOM') ? randomTarget : targetValueRef.current;
-    const correctVal = mode.includes('ROMAJI') ? ROMAJI_MAP[targetChar] : targetChar;
+    if (gameState !== 'PLAYING' || mode === 'GAME_VOICE' || feedback !== null || lockRef.current) return;
+    const targetCharVal = mode.includes('RANDOM') ? randomTarget : targetValueRef.current;
+    const correctVal = mode.includes('ROMAJI') ? ROMAJI_MAP[targetCharVal] : targetCharVal;
     if (card.val === correctVal) {
       handleCorrect();
     } else {
@@ -434,7 +412,7 @@ const App = () => {
   }, [gameState, mode, feedback, randomTarget, handleCorrect, handleWrong]);
 
   const checkVoiceAnswer = useCallback((transcript) => {
-    if (gameState !== 'PLAYING' || mode !== 'GAME_VOICE' || feedback === 'correct' || transitionRef.current) return;
+    if (gameState !== 'PLAYING' || mode !== 'GAME_VOICE' || feedback === 'correct' || lockRef.current) return;
     
     const cleanT = transcript.replace(/[。、.?! \s]/g, '').toLowerCase();
     const target = targetValueRef.current; 
@@ -449,7 +427,7 @@ const App = () => {
     if (isMatched) {
       handleCorrect();
     } else {
-      if (!isError && !transitionRef.current) {
+      if (!isError && !lockRef.current) {
         setIsError(true);
         setTimeout(() => setIsError(false), 400);
       }
@@ -459,53 +437,34 @@ const App = () => {
   const checkVoiceAnswerRef = useRef();
   checkVoiceAnswerRef.current = checkVoiceAnswer;
 
-  useEffect(() => {
-    if (gameState === 'PLAYING') {
-        generateNewTarget(mode);
-    }
-  }, [gameState, mode, generateNewTarget]);
-
   // --- Speech Recognition ---
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
-    const initRecognition = () => {
+    if (!recognitionRef.current) {
         const recognition = new SpeechRecognition();
-        // モバイルURLアクセスの場合は continuous: true が最も「許可ダイアログ」を抑えやすい
         recognition.continuous = true; 
         recognition.interimResults = true; 
         recognition.lang = 'ja-JP';
         
         recognition.onend = () => { 
-            // 自然に止まった場合のみ再起動を試みる
             if (isListeningRef.current && gameState === 'PLAYING') {
                 try { recognition.start(); } catch (e) {}
             }
         };
 
         recognition.onresult = (event) => {
-            if (transitionRef.current) return;
-
-            // 最新の認識結果の塊だけを取得
+            if (lockRef.current) return;
             let currentText = '';
-            const lastIdx = event.results.length - 1;
-            currentText = event.results[lastIdx][0].transcript;
-            
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                currentText = event.results[i][0].transcript;
+            }
             setRecognizedText(currentText);
             if (checkVoiceAnswerRef.current) checkVoiceAnswerRef.current(currentText);
         };
-
         recognitionRef.current = recognition;
-    };
-
-    initRecognition();
-
-    return () => {
-        if (recognitionRef.current) {
-            try { recognitionRef.current.abort(); } catch(e) {}
-        }
-    };
+    }
   }, [gameState]);
 
   const toggleListening = () => {
@@ -521,7 +480,6 @@ const App = () => {
       try {
         recognitionRef.current.start();
       } catch (e) {
-        // 多重起動エラー対策
         try { recognitionRef.current.abort(); setTimeout(() => recognitionRef.current.start(), 100); } catch(e2) {}
       }
     }
@@ -557,15 +515,20 @@ const App = () => {
     setFeedback(null);
     setRecognizedText('');
     setWrongItems([]); 
-    transitionRef.current = false;
+    lockRef.current = false;
     setGameState('PLAYING');
     setStartTime(Date.now());
+
     if (selectedMode === 'GAME_VOICE') {
+      // 修正：音読モード開始時にターゲットを生成
+      generateNewTarget('GAME_VOICE');
       setIsListening(true);
       isListeningRef.current = true;
       setTimeout(() => { 
         if (recognitionRef.current) try { recognitionRef.current.start(); } catch(e) {} 
       }, 500);
+    } else {
+      generateNewTarget(selectedMode, rowIdx, 0);
     }
   };
 
@@ -574,9 +537,7 @@ const App = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     isListeningRef.current = false;
     setIsListening(false); 
-    if (recognitionRef.current) { 
-        try { recognitionRef.current.abort(); } catch(e) {}
-    }
+    if (recognitionRef.current) { try { recognitionRef.current.abort(); } catch(e) {} }
     setGameState('HOME');
     setIsError(false);
     setFeedback(null);
@@ -604,11 +565,11 @@ const App = () => {
   }, [gameState, mode, startTime, saveScore]);
 
   // レンダリング用のターゲット表示
-  const targetCharBase = mode.includes('RANDOM') ? randomTarget : targetValueRef.current;
   const targetCharForDisplay = (() => {
-    if (mode === 'GAME_VOICE' && currentWord) return currentWord.word;
-    if (!mode.includes('ROMAJI') && mode !== 'GAME_VOICE') return ROMAJI_MAP[targetCharBase] || '?';
-    return targetCharBase || '?';
+    if (mode === 'GAME_VOICE') return currentWord ? currentWord.word : '...';
+    const base = mode.includes('RANDOM') ? randomTarget : targetValueRef.current;
+    if (!mode.includes('ROMAJI')) return ROMAJI_MAP[base] || base;
+    return base || '...';
   })();
 
   const renderRankingBox = (title, records) => (
@@ -617,7 +578,7 @@ const App = () => {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="text-[8px] text-slate-300 uppercase font-black">
+            <tr className="text-[8px] text-slate-400 uppercase font-black">
               <th className="pb-2 w-8">순위</th>
               <th className="pb-2">이름 / 학번</th>
               <th className="pb-2 text-right">점수</th>
@@ -658,7 +619,6 @@ const App = () => {
         .mic-active { animation: mic-pulse 1.5s infinite; }
       `}} />
 
-      {/* 不正解オーバーレイ：選択モード用 */}
       {feedback && feedback === 'wrong' && !mode.includes('VOICE') && (
         <div className="absolute inset-0 z-[200] flex items-center justify-center bg-rose-500/10">
           <div className="flex flex-col items-center">
@@ -767,7 +727,7 @@ const App = () => {
                     <button onClick={() => startSession('GAME_VOICE')} className="bg-white border border-slate-100 p-5 rounded-3xl flex items-center justify-between active:scale-[0.98] shadow-sm hover:border-slate-900 hover:bg-slate-50 transition-all group">
                       <div className="flex items-center gap-4">
                         <div className="p-3 bg-slate-100 rounded-2xl text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors shadow-sm"><Mic className="w-5 h-5" /></div>
-                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (時間無制限)</span>
+                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (시간 무제한)</span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-300" />
                     </button>
@@ -781,13 +741,13 @@ const App = () => {
           <div className="flex-1 flex flex-col space-y-6 py-2 animate-in slide-in-from-right duration-500">
             <button onClick={() => setGameState('HOME')} className="flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-widest mb-2 hover:text-slate-600 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Home</button>
             <div className="space-y-8 pb-10">
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭キング (Hiragana Ranking)</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭킹 (Hiragana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
                  {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                  {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                </div>
                
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2 mt-8"><Trophy className="w-4 h-4 text-slate-400" /> 가타카나 랭キング (Katakana Ranking)</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2 mt-8"><Trophy className="w-4 h-4 text-slate-400" /> 가타카나 랭킹 (Katakana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
                  {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                  {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
@@ -799,7 +759,7 @@ const App = () => {
         {gameState === 'PLAYING' && (
           <div className="flex-1 flex flex-col space-y-2 h-full animate-in fade-in duration-500 overflow-hidden relative">
             <div className="flex justify-center flex-none py-1">
-              <button onClick={handleReturnHome} className="flex items-center gap-2 px-8 py-2.5 bg-white border border-slate-200 rounded-full hover:bg-slate-50 hover:border-slate-900 transition-all active:scale-90 shadow-sm z-[100] group"><Home className="w-4 h-4 text-slate-400 group-hover:text-slate-900" /><span className="text-[10px] font-black text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">Home</span></button>
+              <button onClick={handleReturnHome} className="flex items-center gap-2 px-8 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-full transition-all group active:scale-90 shadow-sm z-[100] group"><Home className="w-4 h-4 text-slate-400 group-hover:text-slate-900" /><span className="text-xs font-bold text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">Home</span></button>
             </div>
             <div className="flex justify-between items-end px-2 flex-none min-h-[40px]">
               {isScoredMode(mode) && (
@@ -815,13 +775,11 @@ const App = () => {
                <div className="flex items-center gap-8 w-full px-6">
                   <div className="flex-1 flex flex-col items-center">
                       <p className="text-[8px] text-slate-300 uppercase tracking-[0.4em] font-black mb-2">Target</p>
-                      {mode === 'GAME_VOICE' && currentWord ? (
-                         <div className="flex flex-col items-center">
-                           <span className={`text-4xl font-black transition-colors duration-300 ${isError ? 'text-rose-600' : feedback === 'correct' ? 'text-emerald-600' : 'text-slate-800'}`}>{currentWord.word}</span>
-                           <span className="text-[11px] text-slate-500 mt-2 font-black uppercase tracking-widest">{currentWord.meaning}</span>
-                         </div>
-                      ) : (
-                         <span className={`text-5xl sm:text-7xl font-ud font-black leading-none tracking-tighter transition-colors duration-300 ${isError ? 'text-rose-600' : feedback === 'correct' ? 'text-emerald-600' : 'text-slate-900'}`}>{targetCharForDisplay}</span>
+                      <span className={`text-5xl sm:text-7xl font-ud font-black leading-none tracking-tighter transition-colors duration-300 ${isError ? 'text-rose-600' : feedback === 'correct' ? 'text-emerald-600' : 'text-slate-900'}`}>
+                        {targetCharForDisplay}
+                      </span>
+                      {mode === 'GAME_VOICE' && currentWord && (
+                        <span className="text-[11px] text-slate-500 mt-2 font-black uppercase tracking-widest">{currentWord.meaning}</span>
                       )}
                   </div>
                </div>
@@ -899,7 +857,7 @@ const App = () => {
            </div>
         )}
       </main>
-      <footer className="flex-none p-6 text-center bg-white border-t border-slate-50">
+      <footer className="flex-none p-6 text-center bg-white border-t border-slate-100">
         <p className="text-[7px] text-slate-300 uppercase tracking-[0.4em] font-black">&copy; {new Date().getFullYear()} Akihiro Suwa</p>
       </footer>
     </div>
