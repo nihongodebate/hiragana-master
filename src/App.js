@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana (No duplicates)
+  // Katakana
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -132,7 +132,7 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'ねこ', meaning: '고양이', variants: ['ねこ', '猫', 'ネコ'] },
   { word: 'さかな', meaning: '생선', variants: ['さかな', '魚', 'サカナ'] },
   { word: 'あめ', meaning: '비/사탕', variants: ['あめ', '雨', '飴'] },
-  { word: 'うみ', meaning: '바다', variants: ['うみ', '海', '膿', '生み'] },
+  { word: 'うみ', meaning: '바다', variants: ['うみ', '海'] },
   { word: 'とり', meaning: '새', variants: ['とり', '鳥', '取り', '撮り'] },
   { word: 'はな', meaning: '꽃/코', variants: ['はな', '花', '鼻'] },
   { word: 'ゆき', meaning: '눈', variants: ['ゆき', '雪', '行き'] },
@@ -198,7 +198,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'サラダ', meaning: '샐러드', variants: ['サラダ'] },
   { word: 'シャツ', meaning: '셔츠', variants: ['シャツ'] },
   { word: 'スマホ', meaning: '스마트폰', variants: ['スマホ'] },
-  { word: 'ゲーム', meaning: '게임', variants: ['ゲーム'] },
+  { word: 'ゲーム', meaning: '게임', variants: ['게임', 'ゲーム'] },
   { word: 'トイレ', meaning: '화장실', variants: ['トイレ'] },
   { word: 'カメラ', meaning: '카메라', variants: ['カメラ'] },
   { word: 'ラジオ', meaning: '라디오', variants: ['ラジオ'] },
@@ -305,7 +305,7 @@ const App = () => {
       setCurrentWord(targetObj);
       targetValueRef.current = targetObj.word;
       
-      // 判定クールタイムの設定：前の答えのバッファが消えるまで待つ
+      // クールタイム：0.8秒間は古い音声の残骸を無視
       setTimeout(() => { transitionRef.current = false; }, 800); 
       return targetObj;
     } else if (currentMode.includes('RANDOM')) {
@@ -346,11 +346,9 @@ const App = () => {
     if (transitionRef.current) return;
     transitionRef.current = true; // 次の判定をロック
 
-    // スマホ対応: 認識を強制停止してバッファをリセット
-    if (recognitionRef.current) {
-        try { recognitionRef.current.abort(); } catch(e) {}
-    }
-
+    // スマホ対応: 
+    // マイクをあえて止めない方式に挑戦（許可ダイアログ抑制）
+    // 画面表示上のテキストだけ即クリア
     setRecognizedText('');
     const nextScore = scoreRef.current + 1;
     setScoreCount(nextScore);
@@ -389,7 +387,7 @@ const App = () => {
     setRecognizedText('');
     setFeedback(null);
     setIsError(false);
-    if (recognitionRef.current) try { recognitionRef.current.abort(); } catch(e) {}
+    // マイクは止めずにターゲットだけ変える
     generateNewTarget(mode);
   };
 
@@ -467,19 +465,20 @@ const App = () => {
     }
   }, [gameState, mode, generateNewTarget]);
 
-  // --- Speech Recognition Logic (Highly Optimized for Mobile) ---
+  // --- Speech Recognition ---
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
     const initRecognition = () => {
         const recognition = new SpeechRecognition();
-        recognition.continuous = false; // モバイルの不安定さを回避するため、あえてfalseに設定
+        // モバイルURLアクセスの場合は continuous: true が最も「許可ダイアログ」を抑えやすい
+        recognition.continuous = true; 
         recognition.interimResults = true; 
         recognition.lang = 'ja-JP';
         
         recognition.onend = () => { 
-            // 意図的な停止（isListeningRef）かつゲーム中なら、瞬時に再起動
+            // 自然に止まった場合のみ再起動を試みる
             if (isListeningRef.current && gameState === 'PLAYING') {
                 try { recognition.start(); } catch (e) {}
             }
@@ -487,10 +486,12 @@ const App = () => {
 
         recognition.onresult = (event) => {
             if (transitionRef.current) return;
+
+            // 最新の認識結果の塊だけを取得
             let currentText = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                currentText += event.results[i][0].transcript;
-            }
+            const lastIdx = event.results.length - 1;
+            currentText = event.results[lastIdx][0].transcript;
+            
             setRecognizedText(currentText);
             if (checkVoiceAnswerRef.current) checkVoiceAnswerRef.current(currentText);
         };
@@ -500,19 +501,11 @@ const App = () => {
 
     initRecognition();
 
-    // モバイルブラウザの沈黙による停止を監視するウォッチドッグ
-    const watchdog = setInterval(() => {
-        if (isListeningRef.current && gameState === 'PLAYING' && recognitionRef.current) {
-            try {
-                // 停止状態なら無理やり動かす
-                recognitionRef.current.start();
-            } catch(e) {
-                // すでに動いている場合はエラーになるが無視してOK
-            }
+    return () => {
+        if (recognitionRef.current) {
+            try { recognitionRef.current.abort(); } catch(e) {}
         }
-    }, 1500);
-
-    return () => clearInterval(watchdog);
+    };
   }, [gameState]);
 
   const toggleListening = () => {
@@ -525,9 +518,11 @@ const App = () => {
     } else {
       isListeningRef.current = true;
       setIsListening(true);
-      try { recognitionRef.current.start(); } catch (e) {
-          // エラー時は一度abortしてから再試行
-          try { recognitionRef.current.abort(); recognitionRef.current.start(); } catch(e2) {}
+      try {
+        recognitionRef.current.start();
+      } catch (e) {
+        // 多重起動エラー対策
+        try { recognitionRef.current.abort(); setTimeout(() => recognitionRef.current.start(), 100); } catch(e2) {}
       }
     }
   };
@@ -732,7 +727,7 @@ const App = () => {
                        </div>
                     </div>
                     <div className="space-y-1.5">
-                       <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '탁음·반탁음 (が〜ぱ)' : '탁음·반탁음 (ガ〜パ)'}</p>
+                       <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '탁음·반탁음 (가〜파)' : '탁음·반탁음 (ガ〜パ)'}</p>
                        <div className="grid grid-cols-5 gap-2">
                          {(charType === 'HIRAGANA' ? HIRAGANA_DAKUON : KATAKANA_DAKUON).map((row, idx) => (
                            <button key={idx} onClick={() => startSession('GAME_DAKUON', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-2 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
@@ -772,7 +767,7 @@ const App = () => {
                     <button onClick={() => startSession('GAME_VOICE')} className="bg-white border border-slate-100 p-5 rounded-3xl flex items-center justify-between active:scale-[0.98] shadow-sm hover:border-slate-900 hover:bg-slate-50 transition-all group">
                       <div className="flex items-center gap-4">
                         <div className="p-3 bg-slate-100 rounded-2xl text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors shadow-sm"><Mic className="w-5 h-5" /></div>
-                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (시간 무제한)</span>
+                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (時間無制限)</span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-300" />
                     </button>
@@ -786,13 +781,13 @@ const App = () => {
           <div className="flex-1 flex flex-col space-y-6 py-2 animate-in slide-in-from-right duration-500">
             <button onClick={() => setGameState('HOME')} className="flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-widest mb-2 hover:text-slate-600 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Home</button>
             <div className="space-y-8 pb-10">
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭킹 (Hiragana Ranking)</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭キング (Hiragana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
                  {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                  {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                </div>
                
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2 mt-8"><Trophy className="w-4 h-4 text-slate-400" /> 가타카나 랭킹 (Katakana Ranking)</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2 mt-8"><Trophy className="w-4 h-4 text-slate-400" /> 가타카나 랭キング (Katakana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
                  {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                  {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
