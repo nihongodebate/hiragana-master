@@ -80,7 +80,7 @@ const KATAKANA_BASIC = [
   { name: 'ハ行', chars: ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ'], color: 'border-l-blue-400' },
   { name: 'マ行', chars: ['マ', 'ミ', 'ム', 'メ', 'モ'], color: 'border-l-indigo-400' },
   { name: 'ヤ行', chars: ['ヤ', 'ユ', 'ヨ'], color: 'border-l-purple-400' },
-  { name: 'ら行', chars: ['ラ', 'リ', 'ル', 'レ', 'ロ'], color: 'border-l-pink-400' },
+  { name: 'ラ行', chars: ['ラ', 'リ', 'ル', 'レ', 'ロ'], color: 'border-l-pink-400' },
   { name: 'ワ行', chars: ['ワ', 'ヲ', 'ン'], color: 'border-l-slate-400' },
 ];
 
@@ -89,7 +89,7 @@ const KATAKANA_DAKUON = [
   { name: 'ザ行', chars: ['ザ', 'ジ', 'ズ', 'ゼ', 'ゾ'], color: 'border-l-emerald-500' },
   { name: 'ダ行', chars: ['ダ', 'ヂ', 'ヅ', 'デ', 'ド'], color: 'border-l-amber-500' },
   { name: 'バ行', chars: ['バ', 'ビ', 'ブ', 'ベ', 'ボ'], color: 'border-l-rose-500' },
-  { name: 'パ行', chars: ['パ', 'ピ', 'プ', 'ぺ', 'ポ'], color: 'border-l-indigo-500' },
+  { name: 'パ行', chars: ['パ', 'ピ', 'プ', 'ペ', 'ポ'], color: 'border-l-indigo-500' },
 ];
 
 const ROMAJI_MAP = {
@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana (No duplicates)
+  // Katakana
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -138,30 +138,54 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'ゆき', meaning: '눈', variants: ['ゆき', '雪', '行き'] },
   { word: 'すし', meaning: '초밥', variants: ['すし', '寿司'] },
   { word: 'くるま', meaning: '자동차', variants: ['くるま', '車'] },
-  { word: 'りんご', meaning: '사과', variants: ['りんご', '林檎'] },
-  { word: 'がっこう', meaning: '학교', variants: ['가っこう', '学校'] },
-  { word: 'きって', meaning: '우표', variants: ['きって', '切手'] },
+  { word: 'りんご', meaning: '사과', variants: ['りんご', '林檎', 'リンゴ'] },
+  { word: 'がっこう', meaning: '학교', variants: ['がっこう', '学校'] },
+  { word: 'きって', meaning: '우표', variants: ['きって', '切手', '切って'] },
   { word: 'じかん', meaning: '시간', variants: ['じかん', '時間'] },
-  { word: 'てんぷら', meaning: '튀김', variants: ['てんぷら'] },
+  { word: 'てんぷら', meaning: '튀김', variants: ['てんぷら', '天ぷら', 'テンプラ'] },
   { word: 'やま', meaning: '산', variants: ['やま', '山'] },
   { word: 'かわ', meaning: '강', variants: ['かわ', '川'] },
-  { word: 'つき', meaning: '달', variants: ['つき', '月'] },
+  { word: 'つき', meaning: '달', variants: ['つき', '月', '付'] },
   { word: 'ほし', meaning: '별', variants: ['ほし', '星'] },
   { word: 'でんわ', meaning: '전화', variants: ['でんわ', '電話'] },
   { word: 'しんぶん', meaning: '신문', variants: ['しんぶん', '新聞'] },
   { word: 'おちゃ', meaning: '차', variants: ['おちゃ', 'お茶'] },
   { word: 'じしょ', meaning: '사전', variants: ['じしょ', '辞書'] },
-  { word: 'かばん', meaning: '가방', variants: ['かばん', '鞄'] },
+  { word: 'かばん', meaning: '가방', variants: ['かばん', '鞄', 'カバン'] },
   { word: 'ぼうし', meaning: '모자', variants: ['ぼうし', '帽子'] },
-  { word: 'まど', meaning: '창문', variants: ['まど', '窓'] }
+  { word: 'まど', meaning: '창문', variants: ['まど', '窓'] },
+  { word: 'えんぴつ', meaning: '연필', variants: ['えんぴつ', '鉛筆'] },
+  { word: 'つくえ', meaning: '책상', variants: ['つくえ', '机'] },
+  { word: 'いす', meaning: '의자', variants: ['いす', '椅子', 'イス'] },
+  { word: 'ほん', meaning: '책', variants: ['ほん', '本'] },
+  { word: 'はさみ', meaning: '가위', variants: ['はさみ', '鋏', 'ハサミ'] },
+  { word: 'くつ', meaning: '신발', variants: ['くつ', '靴', 'クツ'] },
+  { word: 'ふく', meaning: '옷', variants: ['ふく', '服', '吹く', '拭く'] },
+  { word: 'かさ', meaning: '우산', variants: ['かさ', '傘'] },
+  { word: 'ひと', meaning: '사람', variants: ['ひと', '人'] },
+  { word: 'こども', meaning: '아이', variants: ['こども', '子供'] },
+  { word: 'ともだち', meaning: '친구', variants: ['ともだち', '友達'] },
+  { word: 'せんせい', meaning: '선생님', variants: ['せんせい', '先生'] },
+  { word: 'なまえ', meaning: '이름', variants: ['なまえ', '名前'] },
+  { word: 'ごはん', meaning: '밥', variants: ['ごはん', '御飯'] },
+  { word: 'みず', meaning: '물', variants: ['みず', '水', '見ず'] },
+  { word: 'えき', meaning: '역', variants: ['えき', '駅'] },
+  { word: 'でんしゃ', meaning: '전철', variants: ['でんしゃ', '電車'] },
+  { word: 'なつ', meaning: '여름', variants: ['なつ', '夏'] },
+  { word: 'ふゆ', meaning: '겨울', variants: ['ふゆ', '冬'] },
+  { word: 'はる', meaning: '봄', variants: ['はる', '春', '貼る', '張る'] },
+  { word: 'あき', meaning: '가을', variants: ['あき', '秋', '空き'] },
+  { word: 'むし', meaning: '벌레', variants: ['むし', '虫', '無視', 'ムシ'] },
+  { word: 'うた', meaning: '노래', variants: ['うた', '歌'] },
+  { word: 'おかね', meaning: '돈', variants: ['おかね', 'お金'] }
 ];
 
 const VOICE_QUIZ_WORDS_KATAKANA = [
-  { word: 'パン', meaning: '빵', variants: ['パン', 'ぱん'] },
-  { word: 'バス', meaning: '버스', variants: ['バス', 'ばす'] },
-  { word: 'ドア', meaning: '문', variants: ['ドア', 'どあ'] },
+  { word: 'パン', meaning: '빵', variants: ['パン'] },
+  { word: 'バス', meaning: '버스', variants: ['バス'] },
+  { word: 'ドア', meaning: '문', variants: ['ドア'] },
   { word: 'テレビ', meaning: 'TV', variants: ['テレビ', 'てれび'] },
-  { word: 'ピアノ', meaning: '피아노', variants: ['ピアノ', 'ぴあの'] },
+  { word: 'ピアノ', meaning: '피아노', variants: ['ピアノ'] },
   { word: 'ケーキ', meaning: '케이크', variants: ['ケーキ'] },
   { word: 'ビール', meaning: '맥주', variants: ['ビール'] },
   { word: 'コップ', meaning: '컵', variants: ['コップ'] },
@@ -174,10 +198,39 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'サラダ', meaning: '샐러드', variants: ['サラダ'] },
   { word: 'シャツ', meaning: '셔츠', variants: ['シャツ'] },
   { word: 'スマホ', meaning: '스마트폰', variants: ['スマホ'] },
-  { word: '게임', meaning: '게임', variants: ['게임', 'ゲーム'] },
-  { word: '화장실', meaning: '화장실', variants: ['화장실', 'トイレ'] },
-  { word: '카메라', meaning: '카메라', variants: ['카메라', 'カメラ'] },
-  { word: '라디오', meaning: '라디오', variants: ['라디오', 'ラジオ'] }
+  { word: 'ゲーム', meaning: '게임', variants: ['ゲーム'] },
+  { word: 'トイレ', meaning: '화장실', variants: ['トイレ'] },
+  { word: 'カメラ', meaning: '카메라', variants: ['カメラ'] },
+  { word: 'ラジオ', meaning: '라디오', variants: ['ラジオ'] },
+  { word: 'トマト', meaning: '토마토', variants: ['トマト'] },
+  { word: 'バナナ', meaning: '바나나', variants: ['バナナ'] },
+  { word: 'メロン', meaning: '멜론', variants: ['メロン'] },
+  { word: 'アイス', meaning: '아이스크림', variants: ['アイス'] },
+  { word: 'ジュース', meaning: '주스', variants: ['ジュース'] },
+  { word: 'コーラ', meaning: '콜라', variants: ['コーラ'] },
+  { word: 'カレー', meaning: '카레', variants: ['カレー'] },
+  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
+  { word: 'スプーン', meaning: 'スプーン', variants: ['スプーン'] },
+  { word: 'フォーク', meaning: 'フォーク', variants: ['フォーク'] },
+  { word: 'ナイフ', meaning: 'ナイフ', variants: ['ナイフ'] },
+  { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
+  { word: 'スカート', meaning: '치마', variants: ['スカート'] },
+  { word: 'ギター', meaning: '기타', variants: ['ギター'] },
+  { word: 'マイク', meaning: 'マイク', variants: ['マイク'] },
+  { word: 'パソコン', meaning: '컴퓨터', variants: ['パソコン'] },
+  { word: 'テニス', meaning: '테니스', variants: ['テニス'] },
+  { word: 'ゴルフ', meaning: '골프', variants: ['ゴルフ'] },
+  { word: 'サッカー', meaning: '축구', variants: ['サッカー'] },
+  { word: 'スキー', meaning: '스키', variants: ['スキー'] },
+  { word: 'ニュース', meaning: '뉴스', variants: ['ニュース'] },
+  { word: 'クラス', meaning: '클래스', variants: ['クラス'] },
+  { word: 'ページ', meaning: '페이지', variants: ['ページ'] },
+  { word: 'デパート', meaning: '백화점', variants: ['デパート'] },
+  { word: 'ホテル', meaning: '호텔', variants: ['ホテル'] },
+  { word: 'レストラン', meaning: '레스토랑', variants: ['レストラン'] },
+  { word: 'コンビニ', meaning: '편의점', variants: ['コンビニ'] },
+  { word: 'バスケット', meaning: '농구', variants: ['バスケット'] },
+  { word: '스포츠', meaning: '스포츠', variants: ['スポーツ'] }
 ];
 
 const ALL_HIRAGANA_POOL = [...HIRAGANA_BASIC, ...HIRAGANA_DAKUON].flatMap(r => r.chars);
@@ -201,7 +254,7 @@ const App = () => {
   const [leaderboard, setLeaderboard] = useState([]);
   const [userName, setUserName] = useState('');
   const [isError, setIsError] = useState(false);
-  const [firebaseError, setFirebaseError] = useState(!isConfigValid);
+  const [firebaseError, setFirebaseError] = useState(null);
   const [isRowLimited, setIsRowLimited] = useState(false);
 
   const [isListening, setIsListening] = useState(false);
@@ -214,7 +267,7 @@ const App = () => {
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
   
-  // --- Derived State Helpers ---
+  // --- Helpers ---
   const displayRows = charType === 'HIRAGANA' 
     ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
     : (mode.includes('DAKUON') ? KATAKANA_DAKUON : KATAKANA_BASIC);
@@ -285,40 +338,30 @@ const App = () => {
   }, [charType, currentRowIndex, targetCharIndex]);
 
   const handleCorrect = useCallback(() => {
-    if (feedback === 'correct') return;
-    setIsError(false);
-    setFeedback('correct');
-    
-    setTimeout(() => {
-      setFeedback(null);
-      setRecognizedText('');
-      
-      const nextScore = scoreRef.current + 1;
-      setScoreCount(nextScore);
-      scoreRef.current = nextScore;
+    setRecognizedText('');
+    const nextScore = scoreRef.current + 1;
+    setScoreCount(nextScore);
+    scoreRef.current = nextScore;
 
-      if (mode === 'GAME_VOICE' || mode.includes('RANDOM')) {
-        generateNewTarget(mode);
+    if (mode === 'GAME_VOICE' || mode.includes('RANDOM')) {
+      generateNewTarget(mode);
+    } else {
+      const currentRows = charType === 'HIRAGANA' 
+          ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
+          : (mode.includes('DAKUON') ? KATAKANA_DAKUON : KATAKANA_BASIC);
+
+      if (targetCharIndex + 1 < (currentRows[currentRowIndex]?.chars.length || 0)) {
+        setTargetCharIndex(prev => prev + 1);
       } else {
-        const currentRows = charType === 'HIRAGANA' 
-            ? (mode.includes('DAKUON') ? HIRAGANA_DAKUON : HIRAGANA_BASIC)
-            : (mode.includes('DAKUON') ? KATAKANA_DAKUON : KATAKANA_BASIC);
-
-        if (targetCharIndex + 1 < (currentRows[currentRowIndex]?.chars.length || 0)) {
-          setTargetCharIndex(prev => prev + 1);
+        if (isRowLimited) {
+          setTargetCharIndex(0); 
+          generateNewTarget(mode, currentRowIndex, 0);
         } else {
-          if (isRowLimited) {
-            setGameState('CLEAR');
-          } else if (currentRowIndex + 1 < currentRows.length) {
-            setCurrentRowIndex(prev => prev + 1);
-            setTargetCharIndex(0);
-          } else {
-            setGameState('CLEAR');
-          }
+          setGameState('CLEAR');
         }
       }
-    }, 400);
-  }, [mode, charType, targetCharIndex, currentRowIndex, generateNewTarget, feedback, isRowLimited]);
+    }
+  }, [mode, charType, targetCharIndex, currentRowIndex, generateNewTarget, isRowLimited]);
 
   const handleSkip = () => {
     setRecognizedText('');
@@ -326,7 +369,6 @@ const App = () => {
   };
 
   const recordMistake = useCallback((target, userAns) => {
-    if (mode === 'GAME_VOICE' || isScoredMode(mode)) return;
     const targetStr = typeof target === 'object' ? (target?.word || '') : target;
     if (!targetStr) return;
 
@@ -351,12 +393,8 @@ const App = () => {
     if (isScoredMode(mode)) {
       const nextMissCount = missCount + 1;
       setMissCount(nextMissCount);
-      if (nextMissCount >= 5) {
-        setGameState('GAMEOVER');
-        saveScore(scoreRef.current, mode);
-      }
     }
-  }, [feedback, mode, recordMistake, currentWord, missCount, saveScore]);
+  }, [feedback, mode, recordMistake, currentWord, missCount]);
 
   const handleCardClickWrap = useCallback((card) => {
     if (gameState !== 'PLAYING' || mode === 'GAME_VOICE' || feedback !== null) return;
@@ -403,11 +441,13 @@ const App = () => {
       recognition.continuous = true;
       recognition.interimResults = true; 
       recognition.lang = 'ja-JP';
+      
       recognition.onend = () => { 
         if (isListening && gameState === 'PLAYING') {
           try { recognition.start(); } catch (e) {}
         }
       };
+
       recognition.onresult = (event) => {
         let currentText = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -426,13 +466,16 @@ const App = () => {
       recognitionRef.current.stop();
       setIsListening(false);
     } else {
-      try { recognitionRef.current.start(); setIsListening(true); } catch (e) {}
+      try {
+        recognitionRef.current.start();
+        setIsListening(true);
+      } catch (e) { console.error("Mic start failed", e); }
     }
   };
 
   useEffect(() => {
-    if (!isConfigValid || !auth) { setFirebaseError(true); return; }
-    signInAnonymously(auth).catch(e => setFirebaseError(true));
+    if (!isConfigValid || !auth) { return; }
+    signInAnonymously(auth).catch(e => setFirebaseError(e));
     const unsubscribeAuth = onAuthStateChanged(auth, (u) => setUser(u));
     return () => unsubscribeAuth();
   }, []);
@@ -464,14 +507,19 @@ const App = () => {
     setStartTime(Date.now());
     if (selectedMode === 'GAME_VOICE') {
       setIsListening(true);
-      setTimeout(() => { if (recognitionRef.current) try { recognitionRef.current.start(); } catch(e) {} }, 500);
+      setTimeout(() => { 
+        if (recognitionRef.current) try { recognitionRef.current.start(); } catch(e) {} 
+      }, 500);
     }
   };
 
   const handleReturnHome = (e) => {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     if (timerRef.current) clearInterval(timerRef.current);
-    if (recognitionRef.current) { recognitionRef.current.stop(); setIsListening(false); }
+    if (recognitionRef.current) { 
+        recognitionRef.current.stop(); 
+        setIsListening(false); 
+    }
     setGameState('HOME');
     setIsError(false);
     setFeedback(null);
@@ -511,7 +559,7 @@ const App = () => {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="text-[8px] text-slate-400 uppercase font-black">
+            <tr className="text-[8px] text-slate-300 uppercase font-black">
               <th className="pb-2 w-8">순위</th>
               <th className="pb-2">이름 / 학번</th>
               <th className="pb-2 text-right">점수</th>
@@ -524,9 +572,9 @@ const App = () => {
             ) : (
               records.map((entry, i) => (
                 <tr key={entry.id} className="text-[10px]">
-                  <td className={`py-2 font-black ${i===0?'text-slate-900':i===1?'text-slate-500':'text-slate-400'}`}>{i+1}</td>
+                  <td className={`py-2 font-black ${i===0?'text-slate-900':i===1?'text-slate-50':'text-slate-400'}`}>{i+1}</td>
                   <td className="py-2 text-slate-700 font-bold truncate max-w-[80px]">{entry.userName}</td>
-                  <td className="py-2 text-right font-mono font-black text-indigo-500">{entry.score}pt</td>
+                  <td className="py-2 text-right font-mono font-black text-slate-900">{entry.score}pt</td>
                   <td className="py-2 text-right text-slate-400 whitespace-nowrap">{formatDate(entry.date)}</td>
                 </tr>
               ))
@@ -552,14 +600,10 @@ const App = () => {
         .mic-active { animation: mic-pulse 1.5s infinite; }
       `}} />
 
-      {feedback && (
-        <div className={`absolute inset-0 z-[200] flex items-center justify-center transition-colors duration-200 ${feedback === 'correct' ? 'bg-slate-900/10' : 'bg-rose-500/10'}`}>
+      {feedback && feedback === 'wrong' && (
+        <div className="absolute inset-0 z-[200] flex items-center justify-center bg-rose-500/10">
           <div className="flex flex-col items-center">
-            {feedback === 'correct' ? (
-               <div className="bg-slate-900 rounded-full p-8 shadow-2xl border-4 border-white animate-bounce"><CheckCircle2 className="w-24 h-24 text-white" /></div>
-            ) : (
-               <div className="bg-rose-500 rounded-full p-8 shadow-2xl border-4 border-white animate-shake"><XCircle className="w-24 h-24 text-white" /></div>
-            )}
+             <div className="bg-rose-500 rounded-full p-8 shadow-2xl border-4 border-white animate-shake"><XCircle className="w-24 h-24 text-white" /></div>
           </div>
         </div>
       )}
@@ -569,16 +613,16 @@ const App = () => {
           <Gamepad2 className="w-4 h-4 text-slate-800" />
           <h1 className="text-xs font-black tracking-[0.2em] text-slate-500 uppercase">KANA MASTER</h1>
         </div>
-        {gameState === 'PLAYING' && (
+        {gameState === 'PLAYING' && isScoredMode(mode) && (
           <div className="bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
             <span className="font-mono text-slate-800 text-xs font-bold tabular-nums">
-              {isScoredMode(mode) ? `${timeLeft.toFixed(1)}s` : "Practice Mode"}
+              {timeLeft.toFixed(1)}s
             </span>
           </div>
         )}
       </header>
 
-      <main className="flex-1 overflow-y-auto flex flex-col p-3 sm:p-4 max-w-xl mx-auto w-full relative">
+      <main className="flex-1 overflow-y-auto flex flex-col p-3 sm:p-4 max-w-lg mx-auto w-full relative">
         {gameState === 'HOME' && (
           <div className="flex-1 flex flex-col space-y-4 py-2 animate-in fade-in duration-500">
             <div className="text-center space-y-2 py-4">
@@ -613,24 +657,22 @@ const App = () => {
 
             <div className="space-y-6 pb-12">
                 <div className="space-y-3">
-                  <h3 className="text-[10px] font-black text-slate-400 border-l-2 border-slate-900 pl-3 py-0.5 uppercase tracking-widest">로마자를 보고 {charType === 'HIRAGANA' ? '가나' : '카나'}를 선택</h3>
+                  <h3 className="text-[10px] font-black text-slate-400 border-l-2 border-slate-900 pl-3 py-0.5 uppercase tracking-widest">로마자를 보고 {charType === 'HIRAGANA' ? '가나' : '가나'}를 선택</h3>
                   <div className="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm space-y-4">
                     <div className="space-y-1.5">
                        <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '기본음 (あ〜わ)' : '기본음 (ア〜ワ)'}</p>
                        <div className="grid grid-cols-5 gap-2">
                          {(charType === 'HIRAGANA' ? HIRAGANA_BASIC : KATAKANA_BASIC).map((row, idx) => (
-                           <button key={idx} onClick={() => startSession('GAME_HINT', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-4 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
+                           <button key={idx} onClick={() => startSession('GAME_HINT', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-2 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
                          ))}
-                         <button onClick={() => startSession('GAME_HINT')} className="col-span-5 py-3 bg-slate-100 border border-slate-200 text-slate-600 rounded-xl text-[10px] font-black hover:bg-slate-200 active:scale-95 transition-all">전체 행 연습</button>
                        </div>
                     </div>
                     <div className="space-y-1.5">
                        <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '탁음·반탁음 (が〜ぱ)' : '탁음·반탁음 (ガ〜パ)'}</p>
                        <div className="grid grid-cols-5 gap-2">
                          {(charType === 'HIRAGANA' ? HIRAGANA_DAKUON : KATAKANA_DAKUON).map((row, idx) => (
-                           <button key={idx} onClick={() => startSession('GAME_DAKUON', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-4 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
+                           <button key={idx} onClick={() => startSession('GAME_DAKUON', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-2 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
                          ))}
-                         <button onClick={() => startSession('GAME_DAKUON')} className="col-span-5 py-3 bg-slate-100 border border-slate-200 text-slate-600 rounded-xl text-[10px] font-black hover:bg-slate-200 active:scale-95 transition-all">전체 행 연습</button>
                        </div>
                     </div>
                     <button onClick={() => startSession('GAME_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-slate-400" /> 랜덤 챌린지 (60s)</button>
@@ -638,27 +680,25 @@ const App = () => {
                 </div>
 
                 <div className="space-y-3">
-                  <h3 className="text-[10px] font-black text-slate-400 border-l-2 border-slate-400 pl-3 py-0.5 uppercase tracking-widest">{charType === 'HIRAGANA' ? '가나' : '카나'}를 보고 로마자를 선택</h3>
+                  <h3 className="text-[10px] font-black text-slate-400 border-l-2 border-slate-400 pl-3 py-0.5 uppercase tracking-widest">{charType === 'HIRAGANA' ? '가나' : '가나'}를 보고 로마자를 선택</h3>
                   <div className="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm space-y-4">
                     <div className="space-y-1.5">
                        <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '기본음 (a〜n)' : '기본음 (a〜n)'}</p>
                        <div className="grid grid-cols-5 gap-2">
                          {(charType === 'HIRAGANA' ? HIRAGANA_BASIC : KATAKANA_BASIC).map((row, idx) => (
-                           <button key={idx} onClick={() => startSession('GAME_ROMAJI_HINT', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-4 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
+                           <button key={idx} onClick={() => startSession('GAME_ROMAJI_HINT', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-2 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
                          ))}
-                         <button onClick={() => startSession('GAME_ROMAJI_HINT')} className="col-span-5 py-3 bg-slate-100 border border-slate-200 text-slate-600 rounded-xl text-[10px] font-black hover:bg-slate-200 active:scale-95 transition-all">전체 행 연습</button>
                        </div>
                     </div>
                     <div className="space-y-1.5">
                        <p className="text-[9px] font-black text-slate-300 uppercase">탁음·반탁음 (ga〜po)</p>
                        <div className="grid grid-cols-5 gap-2">
                          {(charType === 'HIRAGANA' ? HIRAGANA_DAKUON : KATAKANA_DAKUON).map((row, idx) => (
-                           <button key={idx} onClick={() => startSession('GAME_ROMAJI_DAKUON', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-4 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
+                           <button key={idx} onClick={() => startSession('GAME_ROMAJI_DAKUON', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-2 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
                          ))}
-                         <button onClick={() => startSession('GAME_ROMAJI_DAKUON')} className="col-span-5 py-3 bg-slate-100 border border-slate-200 text-slate-600 rounded-xl text-[10px] font-black hover:bg-slate-200 active:scale-95 transition-all">전체 행 연습</button>
                        </div>
                     </div>
-                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-slate-400" /> 랜덤 챌린지 (60s)</button>
+                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-purple-400" /> 랜덤 챌린지 (60s)</button>
                   </div>
                 </div>
 
@@ -682,10 +722,16 @@ const App = () => {
           <div className="flex-1 flex flex-col space-y-6 py-2 animate-in slide-in-from-right duration-500">
             <button onClick={() => setGameState('HOME')} className="flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-widest mb-2 hover:text-slate-600 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Home</button>
             <div className="space-y-8 pb-10">
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> Top 10 Leaderboard</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭킹 (Hiragana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
-                 {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
-                 {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
+                 {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
+                 {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
+               </div>
+               
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2 mt-8"><Trophy className="w-4 h-4 text-slate-400" /> 가타카나 랭킹 (Katakana Ranking)</h3>
+               <div className="grid grid-cols-1 gap-6">
+                 {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
+                 {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                </div>
             </div>
           </div>
@@ -696,15 +742,13 @@ const App = () => {
             <div className="flex justify-center flex-none py-1">
               <button onClick={handleReturnHome} className="flex items-center gap-2 px-8 py-2.5 bg-white border border-slate-200 rounded-full hover:bg-slate-50 hover:border-slate-900 transition-all active:scale-90 shadow-sm z-[100] group"><Home className="w-4 h-4 text-slate-400 group-hover:text-slate-900" /><span className="text-[10px] font-black text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">Home</span></button>
             </div>
-            <div className="flex justify-between items-end px-2 flex-none">
-              <div className="leading-none">
-                <p className="text-[8px] text-slate-400 uppercase font-black tracking-widest">Status</p>
-                <h3 className="text-base font-black text-slate-900 mt-1 uppercase">{isScoredMode(mode) ? `${scoreCount} pt` : "Playing"}</h3>
-              </div>
-              <div className="text-right leading-none">
-                <p className="text-[8px] text-slate-400 uppercase font-black mb-1 tracking-widest">Mistakes</p>
-                <div className="flex gap-1.5 justify-end">{[...Array(5)].map((_, i) => (<div key={i} className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${i < missCount ? 'bg-slate-900 shadow-sm' : 'bg-slate-200'}`} />))}</div>
-              </div>
+            <div className="flex justify-between items-end px-2 flex-none min-h-[40px]">
+              {isScoredMode(mode) && (
+                <div className="leading-none">
+                  <p className="text-[8px] text-slate-400 uppercase font-black tracking-widest">Score</p>
+                  <h3 className="text-base font-black text-slate-900 mt-1 uppercase">{scoreCount} pt</h3>
+                </div>
+              )}
             </div>
             <div className={`relative flex-none ${mode === 'GAME_VOICE' ? 'h-[160px]' : 'h-[110px]'} sm:h-[150px] bg-white border border-slate-100 rounded-[2.5rem] sm:rounded-[3rem] flex flex-col items-center justify-center overflow-hidden shadow-sm transition-all duration-200 ${isError ? 'animate-shake border-rose-200 bg-rose-50' : ''}`}>
                <div className="flex items-center gap-8 w-full px-6">
@@ -767,7 +811,7 @@ const App = () => {
                 <p className="text-4xl font-black text-slate-900 tabular-nums tracking-tighter">{scoreCount} pt</p>
              </div>
              
-             {!isScoredMode(mode) && wrongItems.length > 0 && (
+             {wrongItems.length > 0 && (
                <div className="w-full bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm overflow-hidden flex flex-col">
                  <div className="flex items-center gap-2 mb-4 border-b border-slate-50 pb-2">
                    <AlertCircle className="w-4 h-4 text-indigo-500" />
@@ -789,7 +833,7 @@ const App = () => {
                <button onClick={() => startSession(mode, isRowLimited ? currentRowIndex : null)} className="w-full bg-slate-900 text-white font-black py-5 rounded-[2rem] flex items-center justify-center gap-2 hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all shadow-xl">
                  <RefreshCw className="w-4 h-4" /> 다시 도전하기
                </button>
-               <button onClick={handleReturnHome} className="w-full text-slate-400 hover:text-indigo-600 text-[11px] font-black uppercase tracking-widest py-3 transition-colors">トップに戻る</button>
+               <button onClick={handleReturnHome} className="w-full text-slate-400 hover:text-indigo-600 text-[11px] font-black uppercase tracking-widest py-3 transition-colors">홈으로 돌아가기</button>
              </div>
            </div>
         )}
