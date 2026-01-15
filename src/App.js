@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana (Fixed duplicate keys)
+  // Katakana (No duplicates)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -140,15 +140,15 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'くるま', meaning: '자동차', variants: ['くるま', '車', 'クルマ'] },
   { word: 'りんご', meaning: '사과', variants: ['りんご', '林檎'] },
   { word: 'がっこう', meaning: '학교', variants: ['がっこう', '学校'] },
-  { word: 'きって', meaning: '우표', variants: ['きって', '切手', '切って'] },
+  { word: 'きって', meaning: '우표', variants: ['きって', '切手'] },
   { word: 'じかん', meaning: '시간', variants: ['じかん', '時間'] },
   { word: 'てんぷら', meaning: '튀김', variants: ['てんぷら', '天ぷら', 'テンプラ'] },
   { word: 'やま', meaning: '산', variants: ['やま', '山'] },
   { word: 'かわ', meaning: '강', variants: ['かわ', '川'] },
   { word: 'つき', meaning: '달', variants: ['つき', '月', '付'] },
   { word: 'ほし', meaning: '별', variants: ['ほし', '星'] },
-  { word: 'でんわ', meaning: '전화', variants: ['でんわ', '電話'] },
-  { word: 'しんぶん', meaning: '신문', variants: ['しんぶん', '新聞'] },
+  { word: 'でんわ', meaning: '전話', variants: ['でんわ', '電話'] },
+  { word: 'しんぶん', meaning: '新聞', variants: ['しんぶん', '新聞'] },
   { word: 'おちゃ', meaning: '차', variants: ['おちゃ', 'お茶'] },
   { word: 'じしょ', meaning: '사전', variants: ['じしょ', '辞書'] },
   { word: 'かばん', meaning: '가방', variants: ['かばん', '鞄'] },
@@ -175,7 +175,7 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'ふゆ', meaning: '겨울', variants: ['ふゆ', '冬'] },
   { word: 'はる', meaning: '봄', variants: ['はる', '春', '貼る', '張る'] },
   { word: 'あき', meaning: '가을', variants: ['あき', '秋', '空き'] },
-  { word: 'むし', meaning: '벌레', variants: ['むし', '虫', '無視', 'ムシ'] },
+  { word: 'むし', meaning: '벌레', variants: ['むし', '虫'] },
   { word: 'うた', meaning: '노래', variants: ['うた', '歌'] },
   { word: 'おかね', meaning: '돈', variants: ['おかね', 'お金'] }
 ];
@@ -193,14 +193,14 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'バッグ', meaning: '가방', variants: ['バッグ'] },
   { word: 'ペン', meaning: '펜', variants: ['ペン'] },
   { word: 'ノート', meaning: '노트', variants: ['ノート'] },
-  { word: 'コーヒー', meaning: '커피', variants: ['コーヒー'] },
+  { word: 'コーヒー', meaning: '커ピー', variants: ['コーヒー'] },
   { word: 'タクシー', meaning: '택시', variants: ['タクシー'] },
   { word: 'サラダ', meaning: '샐러드', variants: ['サラダ'] },
   { word: 'シャツ', meaning: '셔츠', variants: ['シャツ'] },
   { word: 'スマホ', meaning: '스마트폰', variants: ['スマホ'] },
-  { word: 'ゲーム', meaning: '게임', variants: ['ゲーム'] },
+  { word: 'ゲーム', meaning: '게임', variants: ['게임', 'ゲーム'] },
   { word: 'トイレ', meaning: '화장실', variants: ['トイレ'] },
-  { word: 'カメラ', meaning: '카메라', variants: ['カメラ'] },
+  { word: 'カメラ', meaning: '카메라', variants: ['카메라'] },
   { word: 'ラジオ', meaning: '라디오', variants: ['ラジオ'] },
   { word: 'トマト', meaning: '토마토', variants: ['トマト'] },
   { word: 'バナナ', meaning: '바나나', variants: ['バナナ'] },
@@ -209,14 +209,14 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ジュース', meaning: '주스', variants: ['ジュース'] },
   { word: 'コーラ', meaning: '콜라', variants: ['コーラ'] },
   { word: 'カレー', meaning: '카레', variants: ['カレー'] },
-  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン', 'らーめん'] },
-  { word: 'スプーン', meaning: '스푼', variants: ['スプーン'] },
+  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
+  { word: 'スプーン', meaning: '스プーン', variants: ['スプーン'] },
   { word: 'フォーク', meaning: '포크', variants: ['フォーク'] },
   { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ'] },
   { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
   { word: 'スカート', meaning: '치마', variants: ['スカート'] },
   { word: 'ギター', meaning: '기타', variants: ['ギター'] },
-  { word: 'マイク', meaning: '마이크', variants: ['マイク'] },
+  { word: 'マイク', meaning: 'マイク', variants: ['マイク'] },
   { word: 'パソコン', meaning: '컴퓨터', variants: ['パソコン'] },
   { word: 'テニス', meaning: '테니스', variants: ['テニス'] },
   { word: 'ゴルフ', meaning: '골프', variants: ['ゴルフ'] },
@@ -224,13 +224,13 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'スキー', meaning: '스키', variants: ['スキー'] },
   { word: 'ニュース', meaning: '뉴스', variants: ['ニュース'] },
   { word: 'クラス', meaning: '클래스', variants: ['クラス'] },
-  { word: 'ページ', meaning: '페이지', variants: ['ページ'] },
+  { word: 'ページ', meaning: '페이지', variants: ['페이지', 'ページ'] },
   { word: 'デパート', meaning: '백화점', variants: ['デパート'] },
   { word: 'ホテル', meaning: '호텔', variants: ['ホテル'] },
   { word: 'レストラン', meaning: '레스토랑', variants: ['レストラン'] },
   { word: 'コンビニ', meaning: '편의점', variants: ['コンビニ'] },
   { word: 'バスケット', meaning: '농구', variants: ['バスケット'] },
-  { word: 'スポーツ', meaning: '스포츠', variants: ['スポーツ'] }
+  { word: 'スポーツ', meaning: '스포츠', variants: ['스포츠', 'スポーツ'] }
 ];
 
 const ALL_HIRAGANA_POOL = [...HIRAGANA_BASIC, ...HIRAGANA_DAKUON].flatMap(r => r.chars);
@@ -267,6 +267,7 @@ const App = () => {
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
   const transitionRef = useRef(false); // 次の問題への移行ロックフラグ
+  const isListeningRef = useRef(false); // ステート更新を待たずに最新の状態を保持
 
   // --- Helpers ---
   const displayRows = charType === 'HIRAGANA' 
@@ -472,8 +473,11 @@ const App = () => {
       recognition.lang = 'ja-JP';
       
       recognition.onend = () => { 
-        if (isListening && gameState === 'PLAYING') {
-          try { recognition.start(); } catch (e) {}
+        // スマホ対応：停止を検知したら即再起動
+        if (isListeningRef.current && gameState === 'PLAYING') {
+          setTimeout(() => {
+            try { recognition.start(); } catch (e) {}
+          }, 100);
         }
       };
 
@@ -491,18 +495,20 @@ const App = () => {
       };
       recognitionRef.current = recognition;
     }
-  }, [isListening, gameState]);
+  }, [gameState]);
 
   const toggleListening = () => {
     if (!recognitionRef.current) return;
     if (isListening) {
       recognitionRef.current.stop();
       setIsListening(false);
+      isListeningRef.current = false;
       setRecognizedText('');
     } else {
       try {
         recognitionRef.current.start();
         setIsListening(true);
+        isListeningRef.current = true;
       } catch (e) { console.error("Mic start failed", e); }
     }
   };
@@ -542,6 +548,7 @@ const App = () => {
     setStartTime(Date.now());
     if (selectedMode === 'GAME_VOICE') {
       setIsListening(true);
+      isListeningRef.current = true;
       setTimeout(() => { 
         if (recognitionRef.current) try { recognitionRef.current.start(); } catch(e) {} 
       }, 500);
@@ -554,6 +561,7 @@ const App = () => {
     if (recognitionRef.current) { 
         recognitionRef.current.stop(); 
         setIsListening(false); 
+        isListeningRef.current = false;
     }
     setGameState('HOME');
     setIsError(false);
@@ -705,7 +713,7 @@ const App = () => {
                        </div>
                     </div>
                     <div className="space-y-1.5">
-                       <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '탁음·반탁음 (が〜ぱ)' : '탁음·반탁음 (ガ〜パ)'}</p>
+                       <p className="text-[9px] font-black text-slate-300 uppercase">{charType === 'HIRAGANA' ? '탁음·반탁음 (가〜ぱ)' : '탁음·반탁음 (ガ〜パ)'}</p>
                        <div className="grid grid-cols-5 gap-2">
                          {(charType === 'HIRAGANA' ? HIRAGANA_DAKUON : KATAKANA_DAKUON).map((row, idx) => (
                            <button key={idx} onClick={() => startSession('GAME_DAKUON', idx)} className={`py-2.5 bg-white border border-slate-100 border-l-2 ${row.color} rounded-xl text-[11px] font-black text-slate-700 hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-0.5 active:scale-95 transition-all shadow-sm`}>{row.chars[0]}</button>
@@ -735,7 +743,7 @@ const App = () => {
                          ))}
                        </div>
                     </div>
-                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-slate-400" /> 랜덤 챌린지 (60s)</button>
+                    <button onClick={() => startSession('GAME_ROMAJI_RANDOM_ALL')} className="w-full py-4 bg-slate-900 text-white rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg hover:bg-slate-800 hover:-translate-y-1 active:scale-95 transition-all"><Dices className="w-4 h-4 text-purple-400" /> 랜덤 챌린지 (60s)</button>
                   </div>
                 </div>
 
@@ -745,7 +753,7 @@ const App = () => {
                     <button onClick={() => startSession('GAME_VOICE')} className="bg-white border border-slate-100 p-5 rounded-3xl flex items-center justify-between active:scale-[0.98] shadow-sm hover:border-slate-900 hover:bg-slate-50 transition-all group">
                       <div className="flex items-center gap-4">
                         <div className="p-3 bg-slate-100 rounded-2xl text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors shadow-sm"><Mic className="w-5 h-5" /></div>
-                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (時間無制限)</span>
+                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (시간 무제한)</span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-300" />
                     </button>
