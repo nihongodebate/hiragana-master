@@ -192,7 +192,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ベッド', meaning: '침대', variants: ['ベッド'] },
   { word: 'バッグ', meaning: '가방', variants: ['バッグ'] },
   { word: 'ペン', meaning: '펜', variants: ['ペン'] },
-  { word: 'ノート', meaning: '노ート', variants: ['ノート'] },
+  { word: 'ノート', meaning: '노트', variants: ['ノート'] },
   { word: 'コーヒー', meaning: '커피', variants: ['コーヒー'] },
   { word: 'タクシー', meaning: '택시', variants: ['タクシー'] },
   { word: 'サラダ', meaning: '샐러드', variants: ['サラダ'] },
