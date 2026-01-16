@@ -79,7 +79,7 @@ const KATAKANA_BASIC = [
   { name: 'ナ行', chars: ['ナ', 'ニ', 'ヌ', 'ネ', 'ノ'], color: 'border-l-teal-400' },
   { name: 'ハ行', chars: ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ'], color: 'border-l-blue-400' },
   { name: 'マ行', chars: ['マ', 'ミ', 'ム', 'メ', 'モ'], color: 'border-l-indigo-400' },
-  { name: 'ヤ行', chars: ['ヤ', 'ユ', 'ヨ'], color: 'border-l-purple-400' },
+  { name: 'ヤ行', chars: ['ヤ', 'ユ', 'よ'], color: 'border-l-purple-400' },
   { name: 'ラ行', chars: ['ラ', 'リ', 'ル', 'レ', 'ロ'], color: 'border-l-pink-400' },
   { name: 'ワ行', chars: ['ワ', 'ヲ', 'ン'], color: 'border-l-slate-400' },
 ];
@@ -89,7 +89,7 @@ const KATAKANA_DAKUON = [
   { name: 'ザ行', chars: ['ザ', 'ジ', 'ズ', 'ゼ', 'ゾ'], color: 'border-l-emerald-500' },
   { name: 'ダ行', chars: ['ダ', 'ヂ', 'ヅ', 'デ', 'ド'], color: 'border-l-amber-500' },
   { name: 'バ行', chars: ['バ', 'ビ', 'ブ', 'ベ', 'ボ'], color: 'border-l-rose-500' },
-  { name: 'パ行', chars: ['パ', 'ピ', 'プ', 'ペ', 'ポ'], color: 'border-l-indigo-500' },
+  { name: 'パ行', chars: ['パ', 'ピ', 'プ', 'ぺ', 'ポ'], color: 'border-l-indigo-500' },
 ];
 
 const ROMAJI_MAP = {
@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana (Updated and fixed typos)
+  // Katakana (Fixed mapping)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -139,7 +139,7 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'すし', meaning: '초밥', variants: ['すし', '寿司'] },
   { word: 'くるま', meaning: '자동차', variants: ['くるま', '車', 'クルマ'] },
   { word: 'りんご', meaning: '사과', variants: ['りんご', '林檎'] },
-  { word: '가っこう', meaning: '학교', variants: ['がっこう', '学校'] },
+  { word: 'がっこう', meaning: '학교', variants: ['がっこう', '学校'] },
   { word: 'きって', meaning: '우표', variants: ['きって', '切手'] },
   { word: 'じかん', meaning: '시간', variants: ['じかん', '時間'] },
   { word: 'てんぷら', meaning: '튀김', variants: ['てんぷら', '天ぷら', 'テンプラ'] },
@@ -198,39 +198,39 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'サラダ', meaning: '샐러드', variants: ['サラダ'] },
   { word: 'シャツ', meaning: '셔츠', variants: ['シャツ'] },
   { word: 'スマホ', meaning: '스마트폰', variants: ['スマホ'] },
-  { word: 'ゲーム', meaning: '게임', variants: ['ゲーム'] },
-  { word: 'トイレ', meaning: '화장실', variants: ['トイレ'] },
-  { word: 'カメラ', meaning: '카메라', variants: ['カメラ'] },
-  { word: 'ラジオ', meaning: '라디오', variants: ['ラジオ'] },
-  { word: 'トマト', meaning: '토마토', variants: ['トマト'] },
-  { word: 'バナナ', meaning: '바나나', variants: ['バナナ'] },
-  { word: 'メロン', meaning: '멜론', variants: ['メロン'] },
-  { word: 'アイス', meaning: '아이스크림', variants: ['アイス'] },
-  { word: 'ジュース', meaning: '주스', variants: ['ジュース'] },
-  { word: 'コーラ', meaning: '콜라', variants: ['コーラ'] },
-  { word: 'カレー', meaning: '카레', variants: ['カレー'] },
-  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
-  { word: 'スプーン', meaning: '스푼', variants: ['スプーン'] },
-  { word: 'フォーク', meaning: '포크', variants: ['フォーク'] },
-  { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ'] },
-  { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
-  { word: 'スカート', meaning: '치마', variants: ['スカート'] },
-  { word: 'ギター', meaning: '기타', variants: ['ギター'] },
-  { word: 'マイク', meaning: '마이크', variants: ['マイク'] },
-  { word: 'パソコン', meaning: '컴퓨터', variants: ['パソコン'] },
-  { word: 'テニス', meaning: '테니스', variants: ['テニス'] },
-  { word: 'ゴルフ', meaning: '골프', variants: ['ゴルフ'] },
-  { word: 'サッカー', meaning: '축구', variants: ['サッカー'] },
-  { word: 'スキー', meaning: '스키', variants: ['スキー'] },
-  { word: 'ニュース', meaning: '뉴스', variants: ['ニュース'] },
-  { word: 'クラス', meaning: '클래스', variants: ['クラス'] },
-  { word: 'ページ', meaning: '페이지', variants: ['ページ'] },
-  { word: 'デパート', meaning: '백화점', variants: ['デパート'] },
-  { word: 'ホテル', meaning: '호텔', variants: ['ホテル'] },
-  { word: 'レストラン', meaning: '레스토랑', variants: ['レストラン'] },
-  { word: 'コンビニ', meaning: '편의점', variants: ['コンビニ'] },
-  { word: 'バスケット', meaning: '농구', variants: ['バスケット'] },
-  { word: 'スポーツ', meaning: '스포츠', variants: ['スポーツ'] }
+  { word: 'ゲーム', meaning: '게임', variants: ['게임', 'ゲーム'] },
+  { word: 'トイレ', meaning: '화장실', variants: ['トイレ', '화장실'] },
+  { word: 'カメラ', meaning: '카메라', variants: ['カメラ', '카메라'] },
+  { word: 'ラジオ', meaning: '라디오', variants: ['ラジオ', '라디오'] },
+  { word: 'トマト', meaning: '토마토', variants: ['トマト', '토마토'] },
+  { word: 'バナナ', meaning: '바나나', variants: ['バナナ', '바나나'] },
+  { word: 'メロン', meaning: '멜론', variants: ['メロン', '멜론'] },
+  { word: 'アイス', meaning: '아이스크림', variants: ['アイス', '아이스'] },
+  { word: 'ジュース', meaning: '주스', variants: ['ジュース', '주스'] },
+  { word: 'コーラ', meaning: '콜라', variants: ['コーラ', '콜라'] },
+  { word: 'カレー', meaning: '카레', variants: ['カレー', '카레'] },
+  { word: 'ラーメン', meaning: '라면', variants: ['ラーメン', '라면'] },
+  { word: 'スプーン', meaning: '스푼', variants: ['スプーン', '스푼'] },
+  { word: 'フォーク', meaning: '포크', variants: ['フォーク', '포크'] },
+  { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ', '나이프'] },
+  { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ', '넥타이'] },
+  { word: 'スカート', meaning: '치마', variants: ['スカート', '치마'] },
+  { word: 'ギター', meaning: '기타', variants: ['ギター', '기타'] },
+  { word: 'マイク', meaning: '마이크', variants: ['マイク', '마이크'] },
+  { word: 'パソコン', meaning: '컴퓨터', variants: ['パソコン', '컴퓨터'] },
+  { word: 'テニス', meaning: '테니스', variants: ['テニス', '테니스'] },
+  { word: 'ゴルフ', meaning: '골프', variants: ['ゴルフ', '골프'] },
+  { word: 'サッカー', meaning: '축구', variants: ['サッカー', '축구'] },
+  { word: 'スキー', meaning: '스키', variants: ['スキー', '스키'] },
+  { word: 'ニュース', meaning: '뉴스', variants: ['ニュース', '뉴스'] },
+  { word: 'クラス', meaning: '클래스', variants: ['クラス', '클래스'] },
+  { word: 'ページ', meaning: '페이지', variants: ['ページ', '페이지'] },
+  { word: 'デパート', meaning: '백화점', variants: ['デパート', '백화점'] },
+  { word: 'ホテル', meaning: '호텔', variants: ['ホテル', '호텔'] },
+  { word: 'レストラン', meaning: '레스토랑', variants: ['レストラン', '레스토랑'] },
+  { word: 'コンビニ', meaning: '편의점', variants: ['コンビニ', '편의점'] },
+  { word: 'バスケット', meaning: '농구', variants: ['バスケット', '농구'] },
+  { word: 'スポーツ', meaning: '스포츠', variants: ['スポーツ', '스포츠'] }
 ];
 
 const ALL_HIRAGANA_POOL = [...HIRAGANA_BASIC, ...HIRAGANA_DAKUON].flatMap(r => r.chars);
@@ -266,7 +266,7 @@ const App = () => {
   const targetValueRef = useRef(''); 
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
-  const lockRef = useRef(false); // 次の問題への判定ロック
+  const lockRef = useRef(false); // 判定ロック用
   const isListeningRef = useRef(false);
 
   // --- Functions ---
@@ -300,7 +300,6 @@ const App = () => {
       setCurrentWord(targetObj);
       targetValueRef.current = targetObj.word;
       
-      // 判定クールタイム：0.8秒間は古い音声入力を無視して「赤色」が出るのを防ぐ
       setTimeout(() => { lockRef.current = false; }, 800); 
       return targetObj;
     } else if (currentMode.includes('RANDOM')) {
@@ -323,6 +322,7 @@ const App = () => {
     } else {
       const target = currentRows[activeRowIdx]?.chars[activeCharIdx] || '';
       targetValueRef.current = target;
+      
       const correctVal = isRomajiSelect ? ROMAJI_MAP[target] : target;
       const otherPool = isRomajiSelect ? ALL_ROMAJI_POOL.filter(v => v !== correctVal) : kanaPool.filter(v => v !== target);
       
@@ -341,9 +341,9 @@ const App = () => {
 
   const handleCorrect = useCallback(() => {
     if (lockRef.current) return;
-    lockRef.current = true; // 判定ロック
+    lockRef.current = true; 
 
-    setRecognizedText(''); // 表示を消去
+    setRecognizedText('');
     const nextScore = scoreRef.current + 1;
     setScoreCount(nextScore);
     scoreRef.current = nextScore;
@@ -426,7 +426,6 @@ const App = () => {
     if (isMatched) {
       handleCorrect();
     } else {
-      // 誤答時のシェイク
       if (!isError && !lockRef.current) {
         setIsError(true);
         setTimeout(() => setIsError(false), 400);
@@ -444,7 +443,6 @@ const App = () => {
 
     if (!recognitionRef.current) {
         const recognition = new SpeechRecognition();
-        // スマホURLアクセスのために continuous: true を使用
         recognition.continuous = true; 
         recognition.interimResults = true; 
         recognition.lang = 'ja-JP';
@@ -521,7 +519,6 @@ const App = () => {
     setStartTime(Date.now());
 
     if (selectedMode === 'GAME_VOICE') {
-      // 最初のターゲット生成
       generateNewTarget('GAME_VOICE');
       setIsListening(true);
       isListeningRef.current = true;
@@ -662,7 +659,7 @@ const App = () => {
                       <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-relaxed">랭킹(랜덤챌린지) 참여 시에만 입력 (선택 사항)</p>
                     </div>
                   </div>
-                  <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="w-full bg-white border border-slate-100 rounded-xl px-4 py-3 text-[12px] font-bold focus:outline-none focus:ring-1 focus:ring-slate-300 text-slate-700 transition-all shadow-inner" placeholder="Name or Student ID" />
+                  <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-[12px] font-bold focus:outline-none focus:ring-1 focus:ring-slate-300 text-slate-700 transition-all shadow-inner" placeholder="Name or Student ID" />
                 </div>
               )}
               <button onClick={() => setGameState('RECORDS')} className="w-full bg-slate-900 text-white py-4 rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg shadow-slate-200 active:scale-95 hover:bg-slate-800 transition-all group">
@@ -742,13 +739,13 @@ const App = () => {
           <div className="flex-1 flex flex-col space-y-6 py-2 animate-in slide-in-from-right duration-500">
             <button onClick={() => setGameState('HOME')} className="flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-widest mb-2 hover:text-slate-600 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Home</button>
             <div className="space-y-8 pb-10">
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭킹 (Hiragana Ranking)</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭キング (Hiragana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
                  {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                  {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                </div>
                
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2 mt-8"><Trophy className="w-4 h-4 text-slate-400" /> 가타카나 랭킹 (Katakana Ranking)</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2 mt-8"><Trophy className="w-4 h-4 text-slate-400" /> 가타카ナ 랭キング (Katakana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
                  {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                  {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'KATAKANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
