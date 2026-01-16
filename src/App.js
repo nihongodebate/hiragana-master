@@ -80,8 +80,8 @@ const KATAKANA_BASIC = [
   { name: 'ハ行', chars: ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ'], color: 'border-l-blue-400' },
   { name: 'マ行', chars: ['マ', 'ミ', 'ム', 'メ', 'モ'], color: 'border-l-indigo-400' },
   { name: 'ヤ行', chars: ['ヤ', 'ユ', 'ヨ'], color: 'border-l-purple-400' },
-  { name: 'ら行', chars: ['ラ', 'リ', 'ル', 'レ', 'ロ'], color: 'border-l-pink-400' },
-  { name: 'わ行', chars: ['ワ', 'ヲ', 'ン'], color: 'border-l-slate-400' },
+  { name: 'ラ行', chars: ['ラ', 'リ', 'ル', 'レ', 'ロ'], color: 'border-l-pink-400' },
+  { name: 'ワ行', chars: ['ワ', 'ヲ', 'ン'], color: 'border-l-slate-400' },
 ];
 
 const KATAKANA_DAKUON = [
@@ -93,7 +93,7 @@ const KATAKANA_DAKUON = [
 ];
 
 const ROMAJI_MAP = {
-  // Hiragana Basic
+  // Hiragana
   'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
   'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
   'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so',
@@ -104,13 +104,12 @@ const ROMAJI_MAP = {
   'や': 'ya', 'ゆ': 'yu', 'よ': 'yo',
   'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro',
   'わ': 'wa', 'を': 'wo', 'ん': 'n',
-  // Hiragana Dakuon
   'が': 'ga', 'ぎ': 'gi', 'ぐ': 'gu', 'げ': 'ge', 'ご': 'go',
   'ざ': 'za', 'じ': 'ji', 'ず': 'zu', 'ぜ': 'ze', 'ぞ': 'zo',
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana Basic
+  // Katakana (Fixed duplicate 'pe' keys and ensured correct types)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -121,7 +120,6 @@ const ROMAJI_MAP = {
   'ヤ': 'ya', 'ユ': 'yu', 'ヨ': 'yo',
   'ラ': 'ra', 'リ': 'ri', 'ル': 'ru', 'レ': 're', 'ロ': 'ro',
   'ワ': 'wa', 'ヲ': 'wo', 'ン': 'n',
-  // Katakana Dakuon (Fixed duplicate hiragana keys here)
   'ガ': 'ga', 'ギ': 'gi', 'グ': 'gu', 'ゲ': 'ge', 'ゴ': 'go',
   'ザ': 'za', 'ジ': 'ji', 'ズ': 'zu', 'ゼ': 'ze', 'ゾ': 'zo',
   'ダ': 'da', 'ヂ': 'ji', 'ヅ': 'zu', 'デ': 'de', 'ド': 'do',
@@ -188,7 +186,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ドア', meaning: '문', variants: ['ドア', 'どあ'] },
   { word: 'テレビ', meaning: 'TV', variants: ['テレビ', 'てれび'] },
   { word: 'ピアノ', meaning: '피아노', variants: ['ピアノ', 'ぴあの'] },
-  { word: 'ケーキ', meaning: '케이크', variants: ['ケーキ'] },
+  { word: 'ケーキ', meaning: '케イク', variants: ['ケーキ'] },
   { word: 'ビール', meaning: '맥주', variants: ['ビール'] },
   { word: 'コップ', meaning: '컵', variants: ['コップ'] },
   { word: 'ベッド', meaning: '침대', variants: ['ベッド'] },
@@ -214,11 +212,11 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
   { word: 'スプーン', meaning: '스푼', variants: ['スプーン'] },
   { word: 'フォーク', meaning: '포크', variants: ['フォーク'] },
-  { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ'] },
+  { word: 'ナイフ', meaning: '나이フ', variants: ['ナイフ'] },
   { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
   { word: 'スカート', meaning: '치마', variants: ['スカート'] },
   { word: 'ギター', meaning: '기타', variants: ['ギター'] },
-  { word: 'マイク', meaning: '마이크 ', variants: ['マイク'] },
+  { word: 'マイク', meaning: '마イク', variants: ['マイク'] },
   { word: 'パソコン', meaning: '컴퓨터', variants: ['パソコン'] },
   { word: 'テニス', meaning: '테니스', variants: ['テニス'] },
   { word: 'ゴルフ', meaning: '골프', variants: ['ゴルフ'] },
@@ -268,7 +266,7 @@ const App = () => {
   const targetValueRef = useRef(''); 
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
-  const lockRef = useRef(false); 
+  const lockRef = useRef(false); // 判定ロック用
   const isListeningRef = useRef(false);
 
   // --- Functions ---
@@ -301,6 +299,7 @@ const App = () => {
       const targetObj = pool[Math.floor(Math.random() * pool.length)];
       setCurrentWord(targetObj);
       targetValueRef.current = targetObj.word;
+      
       setTimeout(() => { lockRef.current = false; }, 800); 
       return targetObj;
     } else if (currentMode.includes('RANDOM')) {
@@ -323,6 +322,7 @@ const App = () => {
     } else {
       const target = currentRows[activeRowIdx]?.chars[activeCharIdx] || '';
       targetValueRef.current = target;
+      
       const correctVal = isRomajiSelect ? ROMAJI_MAP[target] : target;
       const otherPool = isRomajiSelect ? ALL_ROMAJI_POOL.filter(v => v !== correctVal) : kanaPool.filter(v => v !== target);
       
@@ -656,7 +656,7 @@ const App = () => {
                     <User className="w-4 h-4 text-slate-600" />
                     <div>
                       <h4 className="text-[10px] font-black text-slate-900 uppercase">이름 또는 학번</h4>
-                      <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-relaxed">랭킹(랜덤챌린ジ) 참여 시에만 입력 (선택 사항)</p>
+                      <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-relaxed">랭キング(랜덤챌린ジ) 참여 시에만 입력 (선택 사항)</p>
                     </div>
                   </div>
                   <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-[12px] font-bold focus:outline-none focus:ring-1 focus:ring-slate-300 text-slate-700 transition-all shadow-inner" placeholder="Name or Student ID" />
@@ -739,7 +739,7 @@ const App = () => {
           <div className="flex-1 flex flex-col space-y-6 py-2 animate-in slide-in-from-right duration-500">
             <button onClick={() => setGameState('HOME')} className="flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-widest mb-2 hover:text-slate-600 transition-colors"><ChevronLeft className="w-4 h-4" /> Back to Home</button>
             <div className="space-y-8 pb-10">
-               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가나 랭킹 (Hiragana Ranking)</h3>
+               <h3 className="text-xs font-black text-slate-900 border-b-2 border-slate-900 pb-2 mb-4 uppercase tracking-tighter flex items-center gap-2"><Trophy className="w-4 h-4 text-amber-500" /> 히라가な 랭킹 (Hiragana Ranking)</h3>
                <div className="grid grid-cols-1 gap-6">
                  {renderRankingBox("랜덤 (Roma→Kana)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
                  {renderRankingBox("랜덤 (Kana→Roma)", leaderboard.filter(e => e.charType === 'HIRAGANA' && e.mode === 'GAME_ROMAJI_RANDOM_ALL').sort((a,b)=>b.score-a.score).slice(0, 10))}
