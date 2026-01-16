@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana (No duplicates, properly mapped to romanization)
+  // Katakana (Updated and fixed)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -212,7 +212,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
   { word: 'スプーン', meaning: '스푼', variants: ['スプーン'] },
   { word: 'フォーク', meaning: '포크', variants: ['フォーク'] },
-  { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ'] },
+  { word: 'ナイフ', meaning: '칼', variants: ['ナイフ'] },
   { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
   { word: 'スカート', meaning: '치마', variants: ['スカート'] },
   { word: 'ギター', meaning: '기타', variants: ['ギター'] },
@@ -223,7 +223,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'サッカー', meaning: '축구', variants: ['サッカー'] },
   { word: 'スキー', meaning: '스키', variants: ['スキー'] },
   { word: 'ニュース', meaning: '뉴스', variants: ['ニュース'] },
-  { word: 'クラス', meaning: '클래스', variants: ['クラス'] },
+  { word: 'クラス', meaning: '반', variants: ['クラス'] },
   { word: 'ページ', meaning: '페이지', variants: ['ページ'] },
   { word: 'デパート', meaning: '백화점', variants: ['デパート'] },
   { word: 'ホテル', meaning: '호텔', variants: ['ホテル'] },
@@ -263,10 +263,10 @@ const App = () => {
   const [wrongItems, setWrongItems] = useState([]); 
 
   const recognitionRef = useRef(null);
-  const targetValueRef = useRef(''); 
+  const targetValueRef = useRef(''); // 判定用
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
-  const lockRef = useRef(false); 
+  const lockRef = useRef(false); // 重複判定ロック
   const isListeningRef = useRef(false);
 
   // --- Functions ---
@@ -299,7 +299,6 @@ const App = () => {
       const targetObj = pool[Math.floor(Math.random() * pool.length)];
       setCurrentWord(targetObj);
       targetValueRef.current = targetObj.word;
-      
       setTimeout(() => { lockRef.current = false; }, 800); 
       return targetObj;
     } else if (currentMode.includes('RANDOM')) {
@@ -368,7 +367,6 @@ const App = () => {
           if (isRowLimited) {
             setTargetCharIndex(0); 
             generateNewTarget(mode, currentRowIndex, 0);
-            setTimeout(() => { lockRef.current = false; }, 200);
           } else {
             setGameState('CLEAR');
           }
@@ -520,7 +518,6 @@ const App = () => {
     setStartTime(Date.now());
 
     if (selectedMode === 'GAME_VOICE') {
-      // 修正：音読モード開始時にターゲットを生成
       generateNewTarget('GAME_VOICE');
       setIsListening(true);
       isListeningRef.current = true;
@@ -727,7 +724,7 @@ const App = () => {
                     <button onClick={() => startSession('GAME_VOICE')} className="bg-white border border-slate-100 p-5 rounded-3xl flex items-center justify-between active:scale-[0.98] shadow-sm hover:border-slate-900 hover:bg-slate-50 transition-all group">
                       <div className="flex items-center gap-4">
                         <div className="p-3 bg-slate-100 rounded-2xl text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors shadow-sm"><Mic className="w-5 h-5" /></div>
-                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지 (시간 무제한)</span>
+                        <span className="text-xs font-black text-slate-700 group-hover:text-slate-900 transition-colors">낭독 챌린지</span>
                       </div>
                       <ChevronRight className="w-4 h-4 text-slate-300" />
                     </button>
@@ -759,7 +756,7 @@ const App = () => {
         {gameState === 'PLAYING' && (
           <div className="flex-1 flex flex-col space-y-2 h-full animate-in fade-in duration-500 overflow-hidden relative">
             <div className="flex justify-center flex-none py-1">
-              <button onClick={handleReturnHome} className="flex items-center gap-2 px-8 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 rounded-full transition-all group active:scale-90 shadow-sm z-[100] group"><Home className="w-4 h-4 text-slate-400 group-hover:text-slate-900" /><span className="text-xs font-bold text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">Home</span></button>
+              <button onClick={handleReturnHome} className="flex items-center gap-2 px-8 py-2.5 bg-white border border-slate-200 rounded-full hover:bg-slate-50 hover:border-slate-900 transition-all active:scale-90 shadow-sm z-[100] group"><Home className="w-4 h-4 text-slate-400 group-hover:text-slate-900" /><span className="text-xs font-bold text-slate-500 group-hover:text-slate-900 uppercase tracking-widest">Home</span></button>
             </div>
             <div className="flex justify-between items-end px-2 flex-none min-h-[40px]">
               {isScoredMode(mode) && (
