@@ -109,7 +109,7 @@ const ROMAJI_MAP = {
   'だ': 'da', 'ぢ': 'ji', 'づ': 'zu', 'で': 'de', 'ど': 'do',
   'ば': 'ba', 'び': 'bi', 'ぶ': 'bu', 'べ': 'be', 'ぼ': 'bo',
   'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po',
-  // Katakana (Updated and fixed)
+  // Katakana (Updated and fixed typos)
   'ア': 'a', 'イ': 'i', 'ウ': 'u', 'エ': 'e', 'オ': 'o',
   'カ': 'ka', 'キ': 'ki', 'ク': 'ku', 'ケ': 'ke', 'コ': 'ko',
   'サ': 'sa', 'シ': 'shi', 'ス': 'su', 'セ': 'se', 'ソ': 'so',
@@ -139,7 +139,7 @@ const VOICE_QUIZ_WORDS_HIRAGANA = [
   { word: 'すし', meaning: '초밥', variants: ['すし', '寿司'] },
   { word: 'くるま', meaning: '자동차', variants: ['くるま', '車', 'クルマ'] },
   { word: 'りんご', meaning: '사과', variants: ['りんご', '林檎'] },
-  { word: 'がっこう', meaning: '학교', variants: ['がっこう', '学校'] },
+  { word: '가っこう', meaning: '학교', variants: ['がっこう', '学校'] },
   { word: 'きって', meaning: '우표', variants: ['きって', '切手'] },
   { word: 'じかん', meaning: '시간', variants: ['じかん', '時間'] },
   { word: 'てんぷら', meaning: '튀김', variants: ['てんぷら', '天ぷら', 'テンプラ'] },
@@ -212,7 +212,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'ラーメン', meaning: '라면', variants: ['ラーメン'] },
   { word: 'スプーン', meaning: '스푼', variants: ['スプーン'] },
   { word: 'フォーク', meaning: '포크', variants: ['フォーク'] },
-  { word: 'ナイフ', meaning: '칼', variants: ['ナイフ'] },
+  { word: 'ナイフ', meaning: '나이프', variants: ['ナイフ'] },
   { word: 'ネクタイ', meaning: '넥타이', variants: ['ネクタイ'] },
   { word: 'スカート', meaning: '치마', variants: ['スカート'] },
   { word: 'ギター', meaning: '기타', variants: ['ギター'] },
@@ -223,7 +223,7 @@ const VOICE_QUIZ_WORDS_KATAKANA = [
   { word: 'サッカー', meaning: '축구', variants: ['サッカー'] },
   { word: 'スキー', meaning: '스키', variants: ['スキー'] },
   { word: 'ニュース', meaning: '뉴스', variants: ['ニュース'] },
-  { word: 'クラス', meaning: '반', variants: ['クラス'] },
+  { word: 'クラス', meaning: '클래스', variants: ['クラス'] },
   { word: 'ページ', meaning: '페이지', variants: ['ページ'] },
   { word: 'デパート', meaning: '백화점', variants: ['デパート'] },
   { word: 'ホテル', meaning: '호텔', variants: ['ホテル'] },
@@ -263,10 +263,10 @@ const App = () => {
   const [wrongItems, setWrongItems] = useState([]); 
 
   const recognitionRef = useRef(null);
-  const targetValueRef = useRef(''); // 判定用
+  const targetValueRef = useRef(''); 
   const scoreRef = useRef(0);
   const timerRef = useRef(null);
-  const lockRef = useRef(false); // 重複判定ロック
+  const lockRef = useRef(false); // 次の問題への判定ロック
   const isListeningRef = useRef(false);
 
   // --- Functions ---
@@ -299,6 +299,8 @@ const App = () => {
       const targetObj = pool[Math.floor(Math.random() * pool.length)];
       setCurrentWord(targetObj);
       targetValueRef.current = targetObj.word;
+      
+      // 判定クールタイム：0.8秒間は古い音声入力を無視して「赤色」が出るのを防ぐ
       setTimeout(() => { lockRef.current = false; }, 800); 
       return targetObj;
     } else if (currentMode.includes('RANDOM')) {
@@ -321,7 +323,6 @@ const App = () => {
     } else {
       const target = currentRows[activeRowIdx]?.chars[activeCharIdx] || '';
       targetValueRef.current = target;
-      
       const correctVal = isRomajiSelect ? ROMAJI_MAP[target] : target;
       const otherPool = isRomajiSelect ? ALL_ROMAJI_POOL.filter(v => v !== correctVal) : kanaPool.filter(v => v !== target);
       
@@ -340,9 +341,9 @@ const App = () => {
 
   const handleCorrect = useCallback(() => {
     if (lockRef.current) return;
-    lockRef.current = true; 
+    lockRef.current = true; // 判定ロック
 
-    setRecognizedText('');
+    setRecognizedText(''); // 表示を消去
     const nextScore = scoreRef.current + 1;
     setScoreCount(nextScore);
     scoreRef.current = nextScore;
@@ -425,6 +426,7 @@ const App = () => {
     if (isMatched) {
       handleCorrect();
     } else {
+      // 誤答時のシェイク
       if (!isError && !lockRef.current) {
         setIsError(true);
         setTimeout(() => setIsError(false), 400);
@@ -442,6 +444,7 @@ const App = () => {
 
     if (!recognitionRef.current) {
         const recognition = new SpeechRecognition();
+        // スマホURLアクセスのために continuous: true を使用
         recognition.continuous = true; 
         recognition.interimResults = true; 
         recognition.lang = 'ja-JP';
@@ -518,6 +521,7 @@ const App = () => {
     setStartTime(Date.now());
 
     if (selectedMode === 'GAME_VOICE') {
+      // 最初のターゲット生成
       generateNewTarget('GAME_VOICE');
       setIsListening(true);
       isListeningRef.current = true;
@@ -575,7 +579,7 @@ const App = () => {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="text-[8px] text-slate-400 uppercase font-black">
+            <tr className="text-[8px] text-slate-300 uppercase font-black">
               <th className="pb-2 w-8">순위</th>
               <th className="pb-2">이름 / 학번</th>
               <th className="pb-2 text-right">점수</th>
@@ -658,7 +662,7 @@ const App = () => {
                       <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest leading-relaxed">랭킹(랜덤챌린지) 참여 시에만 입력 (선택 사항)</p>
                     </div>
                   </div>
-                  <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="w-full bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 text-[12px] font-bold focus:outline-none focus:ring-1 focus:ring-slate-300 text-slate-700 transition-all shadow-inner" placeholder="Name or Student ID" />
+                  <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} className="w-full bg-white border border-slate-100 rounded-xl px-4 py-3 text-[12px] font-bold focus:outline-none focus:ring-1 focus:ring-slate-300 text-slate-700 transition-all shadow-inner" placeholder="Name or Student ID" />
                 </div>
               )}
               <button onClick={() => setGameState('RECORDS')} className="w-full bg-slate-900 text-white py-4 rounded-2xl flex items-center justify-center gap-2 text-xs font-black shadow-lg shadow-slate-200 active:scale-95 hover:bg-slate-800 transition-all group">
